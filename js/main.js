@@ -63,7 +63,7 @@ const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__
 
 // Функция получения случайного целого числа в заданном интервале, включительно
 const getRandomNumbers = function (min, max) {
-  const newMin = Math.ceil(min); //Округляет аргумент до ближайшего большего целого.
+  const newMin = Math.ceil(min); // Округляет аргумент до ближайшего большего целого.
   const newMax = Math.floor(max); // Округляет аргумент до ближайшего меньшего целого.
   return Math.floor(Math.random() * (newMax - newMin + 1)) + newMin;
 };
@@ -112,7 +112,7 @@ const getRenderingPins = function (pinsClone) {
   pinsClone.forEach(function (pinNew) {
     const clonElement = pinTemplate.cloneNode(true); // возвращает дубликат узла, из которого этот метод был вызван. true, если дети узла должны быть клонированы
     const clonImg = pinTemplate.querySelector(`img`);
-    clonElement.setAttribute(`style`, `left: ${pinNew.location.x}px; top: ${pinNew.location.y}px`); //Добавляет новый атрибут или изменяет значение существующего атрибута у выбранного элемента.
+    clonElement.setAttribute(`style`, `left: ${pinNew.location.x}px; top: ${pinNew.location.y}px`); // Добавляет новый атрибут или изменяет значение существующего атрибута у выбранного элемента.
     clonImg.setAttribute(`src`, `${pinNew.autor.avatar}`);
     clonImg.setAttribute(`alt`, `${pinNew.offer.title}`);
     templateElement.appendChild(clonElement); // добавляет узел в конец списка дочерних элементов указанного родительского узла
