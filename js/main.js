@@ -63,14 +63,14 @@ const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__
 
 // Функция получения случайного целого числа в заданном интервале, включительно
 const getRandomNumbers = function (min, max) {
-  min = Math.ceil(min); //Округляет аргумент до ближайшего большего целого.
-  max = Math.floor(max); // Округляет аргумент до ближайшего меньшего целого.
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  const newMin = Math.ceil(min); //Округляет аргумент до ближайшего большего целого.
+  const newMax = Math.floor(max); // Округляет аргумент до ближайшего меньшего целого.
+  return Math.floor(Math.random() * (newMax - newMin + 1)) + newMin;
 };
 
 // Функция создания случайного объявления
 const getBookingData = function () {
-  const markerX = getRandomNumbers(0, 1200);
+  const markerX = getRandomNumbers(0, 1160);
   const markerY = getRandomNumbers(130, 630);
   return {
     'autor': {
@@ -112,18 +112,17 @@ const getRenderingPins = function (pinsClone) {
   pinsClone.forEach(function (pinNew) {
     const clonElement = pinTemplate.cloneNode(true); // возвращает дубликат узла, из которого этот метод был вызван. true, если дети узла должны быть клонированы
     const clonImg = pinTemplate.querySelector(`img`);
-    const clonAlt = pinTemplate.querySelector(`img`);
     clonElement.setAttribute(`style`, `left: ${pinNew.location.x}px; top: ${pinNew.location.y}px`); //Добавляет новый атрибут или изменяет значение существующего атрибута у выбранного элемента.
     clonImg.setAttribute(`src`, `${pinNew.autor.avatar}`);
-    clonAlt.setAttribute(`alt`, `${pinNew.offer.title}`);
+    clonImg.setAttribute(`alt`, `${pinNew.offer.title}`);
     templateElement.appendChild(clonElement); // добавляет узел в конец списка дочерних элементов указанного родительского узла
-  });
-  mapPins.appendChild(templateElement);
+  }); // 3 часть
+  mapPins.appendChild(templateElement); // 4 часть
 };
 
 // Присваиваю константе значения функции создания и заполнения массива
-const pinsData = getCreatePins();
+const pinsData = getCreatePins(); // 1 часть
 
 getRenderingPins(pinsData);
 
-map.classList.remove(`map--faded`);
+map.classList.remove(`map--faded`); // 2 часть
