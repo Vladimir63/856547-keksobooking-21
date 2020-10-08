@@ -127,7 +127,7 @@ getRenderingPins(pinsData);
 
 map.classList.remove(`map--faded`); // 2 часть
 
-//_________________module3 - task2_________________
+// _________________module3 - task2_________________
 
 const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`); // создаём DOM-элемент объявления (карточка объявления)
 
@@ -157,19 +157,19 @@ const getCreateCard = function (newCards) {
     // title
     popupTitle.textContent = `${newCards[i].offer.title}`;
     if (!newCards[i].offer.title) {
-      removeBlock(popupTitle)
+      removeBlock(popupTitle);
     }
 
     // address
     popupTextAddress.textContent = `${newCards[i].offer.address}`;
     if (!newCards[i].offer.address) {
-      removeBlock(popupTextAddress)
+      removeBlock(popupTextAddress);
     }
 
     // price
     popupTextPrice.textContent = `${newCards[i].offer.price}₽/ночь`;
     if (!newCards[i].offer.price) {
-      removeBlock(popupTextPrice)
+      removeBlock(popupTextPrice);
     }
 
     // type
@@ -204,15 +204,15 @@ const getCreateCard = function (newCards) {
 
     // 3-способ
     const typeTranslate = {
-      flat: "квартира", bungalow: "Бунгало", house: "Дом", palace: "Дворец"
-    }
-    popupType.textContent = typeTranslate[newCards[i].offer.type] || "";
+      flat: `квартира`, bungalow: `Бунгало`, house: `Дом`, palace: `Дворец`
+    };
+    popupType.textContent = typeTranslate[newCards[i].offer.type] || ``;
     if (!newCards[i].offer.type) {
-      removeBlock(popupType)
+      removeBlock(popupType);
     }
 
-    //capacity
-    let roomsCol = "";
+    // capacity
+    let roomsCol = ``;
     if (newCards[i].offer.rooms === 1) {
       roomsCol = `${newCards[i].offer.rooms} комната для `;
     } else if (newCards[i].offer.rooms > 1 && newCards[i].offer.rooms < 5) {
@@ -221,7 +221,7 @@ const getCreateCard = function (newCards) {
       roomsCol = `${newCards[i].offer.rooms} комнат для `;
     }
 
-    let guestsCol = "";
+    let guestsCol = ``;
     if (newCards[i].offer.guests === 1) {
       guestsCol = `${newCards[i].offer.guests} гостя.`;
     } else {
@@ -229,25 +229,25 @@ const getCreateCard = function (newCards) {
     }
     popupTextCapacity.textContent = roomsCol + guestsCol;
     if (!newCards[i].offer.rooms || !newCards[i].offer.guests) {
-      removeBlock(popupTextCapacity)
+      removeBlock(popupTextCapacity);
     }
 
-    //time
+    // time
     popupTextTime.textContent = `Заезд после ${newCards[i].offer.checkin}, выезд до ${newCards[i].offer.checkuot}`;
     if (!newCards[i].offer.checkin || !newCards[i].offer.checkuot) {
-      removeBlock(popupTextTime)
+      removeBlock(popupTextTime);
     }
 
     // description
     popupDescription.textContent = `${newCards[i].offer.description}`;
     if (!newCards[i].offer.description) {
-      removeBlock(popupDescription)
+      removeBlock(popupDescription);
     }
 
     // description
     popupAvatar.setAttribute(`src`, `${newCards[i].autor.avatar}`);
     if (!newCards[i].autor.avatar) {
-      popupAvatar.setAttribute(`style`, `display: none`)
+      popupAvatar.setAttribute(`style`, `display: none`);
     }
 
     // photo
@@ -256,7 +256,7 @@ const getCreateCard = function (newCards) {
       popupPhotos.appendChild(popupPhoto);
     }
     if (!newCards[i].offer.photos.length) {
-      removeBlock(popupPhotos)
+      removeBlock(popupPhotos);
     }
 
     // features
@@ -265,14 +265,11 @@ const getCreateCard = function (newCards) {
     }
 
     for (let j = 0; j < newCards[i].offer.features.length; j++) {
-      const li = document.createElement('li');
-      li.setAttribute('class', `popup__feature popup__feature--${newCards[i].offer.features[j]}`);
+      const li = document.createElement(`li`);
+      li.setAttribute(`class`, `popup__feature popup__feature--${newCards[i].offer.features[j]}`);
       popupFeatures.appendChild(li);
     }
-    console.log(newCards[i].offer.features);
-
-
-
+    // console.log(newCards[i].offer.features);
 
 
     templateElementCard.appendChild(copyCard);// добавляет узел в конец списка дочерних элементов указанного родительского узла
@@ -280,13 +277,11 @@ const getCreateCard = function (newCards) {
   }
 
 
-
-  const mapFiltersContainer = mapPins.querySelector(".map__filters-container");
+  const mapFiltersContainer = mapPins.querySelector(`.map__filters-container`);
   mapPins.insertBefore(templateElementCard, mapFiltersContainer);
   // map.appendChild(templateElementCard);
 };
 
 getCreateCard(pinsData);
-
 
 
