@@ -295,7 +295,9 @@ const getCreateCard = function (newCards) {
       popupFeatures.appendChild(li);
     }
     // console.log(newCards[i].offer.features);
-
+    if (!newCards[i].offer.features.length) {
+      removeBlock(popupFeatures);
+    }
 
     templateElementCard.appendChild(copyCard);// добавляет узел в конец списка дочерних элементов указанного родительского узла
 
