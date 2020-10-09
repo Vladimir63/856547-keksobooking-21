@@ -68,10 +68,35 @@ const getRandomNumbers = function (min, max) {
   return Math.floor(Math.random() * (newMax - newMin + 1)) + newMin;
 };
 
+// Функция создания случайного массива с фичами
+const createArrFeatures = function () {
+  const arrfeatures = [];
+  const arrFeaturesLength = getRandomNumbers(0, FEATURES.length);
+  for (let i = 0; i < arrFeaturesLength; i++) {
+    const m = Math.floor(Math.random() * FEATURES.length);
+    arrfeatures.push(FEATURES[m]);
+  }
+  const uniqueArrfeatures = unique(arrfeatures);
+  return uniqueArrfeatures;
+};
+
+// Оставить уникальные элементы массива https://learn.javascript.ru/task/array-unique
+function unique(arr) {
+  let result = [];
+
+  for (let str of arr) {
+    if (!result.includes(str)) {
+      result.push(str);
+    }
+  }
+  return result;
+}
+
 // Функция создания случайного объявления
 const getBookingData = function () {
   const markerX = getRandomNumbers(0, 1160);
   const markerY = getRandomNumbers(130, 630);
+  const newFeatures = createArrFeatures();
   return {
     'autor': {
       'avatar': `img/avatars/user0${getRandomNumbers(1, 8)}.png`
@@ -85,7 +110,7 @@ const getBookingData = function () {
       'guests': getRandomNumbers(1, 5),
       'checkin': TIME[(getRandomNumbers(0, 2))],
       'checkuot': TIME[(getRandomNumbers(0, 2))],
-      'features': Array(getRandomNumbers(1, 4)).fill(FEATURES[getRandomNumbers(0, FEATURES.length - 1)]),
+      "features": newFeatures,
       'description': DESCRIPTIONS[getRandomNumbers(0, DESCRIPTIONS.length - 1)],
       'photos': Array(getRandomNumbers(1, 4)).fill(PHOTOS[getRandomNumbers(0, PHOTOS.length - 1)])
     },
