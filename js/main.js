@@ -53,6 +53,13 @@ const DESCRIPTIONS = [
   `Отличное бунгало на берегу океана, к вашим услугам всегда свежая рыба (если поймаете)`
 ];
 
+const TYPE_PRICE = {
+  'bungalow': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000
+};
+
 // Получаем элемент с классом map. Используем селектор.
 const map = document.querySelector(`.map`);
 // Получаем элементы с классом map__pin. Используем селектор
@@ -81,10 +88,10 @@ const createArrFeatures = function () {
 };
 
 // Оставить уникальные элементы массива https://learn.javascript.ru/task/array-unique
-function unique(arr) {
+function unique(array) {
   let result = [];
 
-  for (let str of arr) {
+  for (let str of array) {
     if (!result.includes(str)) {
       result.push(str);
     }
@@ -150,7 +157,7 @@ const pinsData = getCreatePins(); // 1 часть
 
 getRenderingPins(pinsData);
 
-map.classList.remove(`map--faded`); // 2 часть
+// map.classList.remove(`map--faded`); // 2 часть
 
 // _________________module3 - task2_________________
 
@@ -178,6 +185,12 @@ const getCreateCard = function (newCards) {
     const popupPhoto = copyCard.querySelector(`.popup__photo`);
     const popupPhotos = copyCard.querySelector(`.popup__photos`);
     const popupAvatar = copyCard.querySelector(`.popup__avatar`);
+    const popupClose = copyCard.querySelector(`.popup__close`); // popup закрыть
+
+    // добавим обработчик событий на крестик (закрыть)
+    popupClose.addEventListener(`click`, function () {
+      copyCard.classList.add(`hidden`);
+    });
 
     // title
     popupTitle.textContent = `${newCards[i].offer.title}`;
@@ -312,3 +325,233 @@ const getCreateCard = function (newCards) {
 getCreateCard(pinsData);
 
 
+// _________________module4 - task1_________________
+
+
+const adForm = document.querySelector(`.ad-form`);
+const mapFilters = document.querySelector(`.map__filters`);
+
+// Блокируем изменение атрибутов формы
+for (let i = 0; i < adForm.children.length; i++) {
+  adForm.children[i].setAttribute(`disabled`, `disabled`);
+}
+
+// Блокируем изменение атрибутов блока фильтров
+for (let i = 0; i < mapFilters.children.length; i++) {
+  mapFilters.children[i].setAttribute(`disabled`, `disabled`);
+}
+
+// cтраница Кексобукинга может находиться в двух режимах: неактивном и активном.В неактивном режиме страница находится сразу после открытия.В этом режиме отключены форма и карта и единственное доступное действие — перемещение метки.map__pin--main, являющейся контролом указания адреса объявления.
+
+const mapPin = document.querySelector(`.map__pin--main`); // главная метка
+// const map = document.querySelector(`.map`);
+
+// Узнаем координаты главной метки еще до активации страницы и записываем его в поле формы адреса
+const WIDTH_MAIN_PIN = 62;
+const HEIGHT_MAIN_PIN = 62;
+const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
+const TOP_MAP_PIN = mapPin.offsetTop + HEIGHT_MAIN_PIN / 2;
+
+// Записать данные координат в форму объявления
+adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
+
+
+// Первое взаимодействие с меткой (mousedown) переводит страницу в активное состояние.
+// В активном состоянии страница позволяет вносить изменения в форму и отправлять её на сервер, просматривать похожие объявления на карте, фильтровать их и уточнять подробную информацию о них, показывая для каждого из объявлений карточку.
+// Функция активации: рисуются метки, активируется карта, блок фильтров, форма.
+const activatePage = function () {
+  map.classList.remove(`map--faded`);
+  adForm.classList.remove(`ad-form--disabled`);
+  mapFilters.classList.remove(`ad-form--disabled`);
+  for (let i = 0; i < adForm.children.length; i++) {
+    adForm.children[i].removeAttribute(`disabled`);
+  }
+  for (let i = 0; i < mapFilters.children.length; i++) {
+    mapFilters.children[i].removeAttribute(`disabled`);
+  }
+
+  // Узнаем координаты главной метки еще до активации страницы и записываем его в поле формы адреса
+
+
+  // Записать данные координат в форму объявления
+  adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
+
+};
+
+
+// Обработчики событий: активируют страницу кексобукинга
+// по нажатию левой кнопки мыши или клавиши Enter(когда метка в фокусе)
+const buttonMouseDownHandler = function (evt) {
+  if (evt.button === 0) {
+    activatePage();
+    // Удаляем обработчики
+    mapPin.removeEventListener(`mousedown`, buttonMouseDownHandler);
+    mapPin.removeEventListener(`keydown`, buttonKeyDownHandler);
+  }
+};
+
+const buttonKeyDownHandler = function (evt) {
+  if (evt.key === `Enter`) {
+    activatePage();
+    // Удаляем обработчики
+    mapPin.removeEventListener(`mousedown`, buttonMouseDownHandler);
+    mapPin.removeEventListener(`keydown`, buttonKeyDownHandler);
+  }
+};
+
+// Вешаем 2 обработчика событий на главную метку
+mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
+mapPin.addEventListener(`mousedown`, buttonMouseDownHandler);
+
+
+// Элементы формы DOM
+const titleForm = document.querySelector(`#title`);
+const priceForm = document.querySelector(`#price`);
+const addressForm = document.querySelector(`#address`);
+const typeOfHouseForm = document.querySelector(`#type`);
+const timeInForm = document.querySelector(`#timein`);
+const timeOutForm = document.querySelector(`#timeout`);
+const adFormRoomNumber = adForm.querySelector(`#room_number`);
+const adFormGuestNumber = adForm.querySelector(`#capacity`);
+
+// Функция ограничений для полей ввода формы объявлений, до валидации формы
+const createAttributesForm = function () {
+
+  // 0. Найти форму в DOM, установить ей атрибут action = "https://javascript.pages.academy/keksobooking"
+
+  adForm.setAttribute(`active`, `https://javascript.pages.academy/keksobooking`);
+  // 1. Найти заголовок объявления в разметке, установить для него атрибуты: обязательное текстовое, минимальное длина 30 сим, максимальная 100 символов.
+
+  titleForm.setAttribute(`required`, `required`);
+  titleForm.setAttribute(`minlength`, `30`);
+  titleForm.setAttribute(`maxlength`, `100`);
+  // 2. Цена за ночь. Обязательное числовое поле. Максимальное значение 1 000 000.
+
+  priceForm.setAttribute(`required`, `required`);
+  priceForm.setAttribute(`max`, `1000000`);
+
+  // 3. Адрес, обязательное поле, недоступно для редактирования
+  addressForm.setAttribute(`readonly`, `readonly`);
+};
+
+createAttributesForm();
+
+// При активации чтоб было верное значение: квартира = 1000
+priceForm.setAttribute(`min`, TYPE_PRICE[typeOfHouseForm.options[typeOfHouseForm.selectedIndex].value]);
+priceForm.setAttribute(`placeholder`, TYPE_PRICE[typeOfHouseForm.options[typeOfHouseForm.selectedIndex].value]);
+
+// Вешаем обработчик на изменение типа жилья
+typeOfHouseForm.addEventListener(`change`, function (evt) {
+  priceForm.setAttribute(`min`, TYPE_PRICE[typeOfHouseForm.options[evt.currentTarget.selectedIndex].value]);
+  priceForm.setAttribute(`placeholder`, TYPE_PRICE[typeOfHouseForm.options[evt.currentTarget.selectedIndex].value]);
+});
+
+
+// Поля «Время заезда» и «Время выезда» синхронизированы
+const validationTime = function (evt) {
+  if (evt.currentTarget.name === `timeout`) {
+    timeInForm.options.selectedIndex = timeOutForm.options.selectedIndex;
+  } else {
+    timeOutForm.options.selectedIndex = timeInForm.options.selectedIndex;
+  }
+};
+
+timeInForm.addEventListener(`change`, validationTime);
+timeOutForm.addEventListener(`change`, validationTime);
+
+
+// Валидация: зависимость кол-ва гостей от кол-ва комнат
+// Проверяем количество комнат
+const checkRoomNumber = (roomNumber) => {
+  switch (roomNumber) {
+    case `1`:
+      roomNumber = 1;
+      break;
+    case `2`:
+      roomNumber = 2;
+      break;
+    case `3`:
+      roomNumber = 3;
+      break;
+    case `100`:
+      roomNumber = 100;
+      break;
+  }
+  return roomNumber;
+};
+
+// Проверяем количество гостей
+const checkGuestNumber = (guestNumber) => {
+  switch (guestNumber) {
+    case `1`:
+      guestNumber = 1;
+      break;
+    case `2`:
+      guestNumber = 2;
+      break;
+    case `3`:
+      guestNumber = 3;
+      break;
+    case `0`:
+      guestNumber = 100;
+      break;
+  }
+  return guestNumber;
+};
+
+// Устанавливаем выбор количества доступных гостей
+const setGuestNumber = (roomNumber, guestNumber) => {
+  switch (roomNumber) {
+    case 1:
+      if (roomNumber !== guestNumber) {
+        adFormGuestNumber.setCustomValidity(`1 комната для 1 гостя`);
+      } else {
+        adFormGuestNumber.setCustomValidity(``);
+      }
+      break;
+    case 2:
+      if (!(roomNumber >= guestNumber)) {
+        adFormGuestNumber.setCustomValidity(`2 комнаты для 2 гостей или для 1 гостя`);
+      } else {
+        adFormGuestNumber.setCustomValidity(``);
+      }
+      break;
+    case 3:
+      if (!(roomNumber >= guestNumber)) {
+        adFormGuestNumber.setCustomValidity(`3 комнаты для 3 гостей, для 2 гостей или для 1 гостя`);
+      } else {
+        adFormGuestNumber.setCustomValidity(``);
+      }
+      break;
+    case 100:
+      if (roomNumber !== guestNumber) {
+        adFormGuestNumber.setCustomValidity(`не для гостей`);
+      } else {
+        adFormGuestNumber.setCustomValidity(``);
+      }
+  }
+};
+
+const setGuestNumbers = () => {
+  const roomNumber = checkRoomNumber(adFormRoomNumber.value);
+  const guestNumber = checkGuestNumber(adFormGuestNumber.value);
+  return setGuestNumber(roomNumber, guestNumber);
+};
+setGuestNumbers();
+
+// Проверяем изменение количества комнат
+adFormRoomNumber.addEventListener(`change`, () => {
+  setGuestNumbers();
+});
+
+// Проверяем изменение количества гостей
+adFormGuestNumber.addEventListener(`change`, () => {
+  setGuestNumbers();
+});
+
+// Значением полей «Ваша фотография» и «Фотография жилья» может быть только изображение.
+const setImgFiles = function () {
+  document.querySelector(`#avatar`).setAttribute(`accept`, `image/*`);
+  document.querySelector(`#images`).setAttribute(`accept`, `image/*`);
+};
+setImgFiles();
