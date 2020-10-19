@@ -157,7 +157,6 @@ const pinsData = getCreatePins(); // 1 часть
 
 getRenderingPins(pinsData);
 
-// map.classList.remove(`map--faded`); // 2 часть
 
 // _________________module3 - task2_________________
 
@@ -179,7 +178,6 @@ const getCreateCard = function (newCards) {
     const popupType = copyCard.querySelector(`.popup__type`);
     const popupTextCapacity = copyCard.querySelector(`.popup__text--capacity`);
     const popupTextTime = copyCard.querySelector(`.popup__text--time`);
-    // const popupFeature = copyCard.querySelector(`.popup__feature`); // Преимущество
     const popupFeatures = copyCard.querySelector(`.popup__features`); // Блок с преимуществами
     const popupDescription = copyCard.querySelector(`.popup__description`);
     const popupPhoto = copyCard.querySelector(`.popup__photo`);
@@ -210,37 +208,7 @@ const getCreateCard = function (newCards) {
       removeBlock(popupTextPrice);
     }
 
-    // type
-    // 1-способ
-    // if (newCards[i].offer.type === "flat") {
-    //   popupType.textContent = "Квартира";
-    // } else if (newCards[i].offer.type === "bungalow") {
-    //   popupType.textContent = "Бунгало";
-    // } else if (newCards[i].offer.type === "house") {
-    //   popupType.textContent = "Дом";
-    // } else if (newCards[i].offer.type === "palace") {
-    //   popupType.textContent = "Дворец";
-    // }
-
-    // 2-способ
-    // switch (newCards[i].offer.type) {
-    //   case "flat":
-    //     popupType.textContent = "Квартира";
-    //     break;
-    //   case "bungalow":
-    //     popupType.textContent = "Бунгало";
-    //     break;
-    //   case "house":
-    //     popupType.textContent = "Дом";
-    //     break;
-    //   case "palace":
-    //     popupType.textContent = "Дворец";
-    //     break;
-    //   default: removeBlock(popupType)
-    // }
-
-
-    // 3-способ
+    // offer
     const typeTranslate = {
       flat: `квартира`, bungalow: `Бунгало`, house: `Дом`, palace: `Дворец`
     };
@@ -307,19 +275,15 @@ const getCreateCard = function (newCards) {
       li.setAttribute(`class`, `popup__feature popup__feature--${newCards[i].offer.features[j]}`);
       popupFeatures.appendChild(li);
     }
-    // console.log(newCards[i].offer.features);
     if (!newCards[i].offer.features.length) {
       removeBlock(popupFeatures);
     }
-
     templateElementCard.appendChild(copyCard);// добавляет узел в конец списка дочерних элементов указанного родительского узла
-
   }
 
 
   const mapFiltersContainer = mapPins.querySelector(`.map__filters-container`);
   mapPins.insertBefore(templateElementCard, mapFiltersContainer);
-  // map.appendChild(templateElementCard);
 };
 
 getCreateCard(pinsData);
@@ -344,7 +308,6 @@ for (let i = 0; i < mapFilters.children.length; i++) {
 // cтраница Кексобукинга может находиться в двух режимах: неактивном и активном.В неактивном режиме страница находится сразу после открытия.В этом режиме отключены форма и карта и единственное доступное действие — перемещение метки.map__pin--main, являющейся контролом указания адреса объявления.
 
 const mapPin = document.querySelector(`.map__pin--main`); // главная метка
-// const map = document.querySelector(`.map`);
 
 // Узнаем координаты главной метки еще до активации страницы и записываем его в поле формы адреса
 const WIDTH_MAIN_PIN = 62;
@@ -375,7 +338,6 @@ const activatePage = function () {
 
   // Записать данные координат в форму объявления
   adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
-
 };
 
 
@@ -419,7 +381,7 @@ const createAttributesForm = function () {
 
   // 0. Найти форму в DOM, установить ей атрибут action = "https://javascript.pages.academy/keksobooking"
 
-  adForm.setAttribute(`active`, `https://javascript.pages.academy/keksobooking`);
+  adForm.setAttribute(`action`, `https://javascript.pages.academy/keksobooking`);
   // 1. Найти заголовок объявления в разметке, установить для него атрибуты: обязательное текстовое, минимальное длина 30 сим, максимальная 100 символов.
 
   titleForm.setAttribute(`required`, `required`);
