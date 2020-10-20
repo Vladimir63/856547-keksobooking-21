@@ -155,8 +155,6 @@ const getRenderingPins = function (pinsClone) {
 // Присваиваю константе значения функции создания и заполнения массива
 const pinsData = getCreatePins(); // 1 часть
 
-getRenderingPins(pinsData);
-
 
 // _________________module3 - task2_________________
 
@@ -286,9 +284,6 @@ const getCreateCard = function (newCards) {
   mapPins.insertBefore(templateElementCard, mapFiltersContainer);
 };
 
-getCreateCard(pinsData);
-
-
 // _________________module4 - task1_________________
 
 
@@ -332,10 +327,10 @@ const activatePage = function () {
   for (let i = 0; i < mapFilters.children.length; i++) {
     mapFilters.children[i].removeAttribute(`disabled`);
   }
-
+  // перенес ф-ции отрисовывания меток и карт. теперь эл-ты будут отрисовывать <b>после</b> активации страницы (клик по гл. метке)
+  getCreateCard(pinsData);
+  getRenderingPins(pinsData);
   // Узнаем координаты главной метки еще до активации страницы и записываем его в поле формы адреса
-
-
   // Записать данные координат в форму объявления
   adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
 };
