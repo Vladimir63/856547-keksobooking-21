@@ -143,7 +143,7 @@ const getRenderingPins = function (pinsClone) {
 
   pinsClone.forEach(function (pinNew) {
     const clonElement = pinTemplate.cloneNode(true); // возвращает дубликат узла, из которого этот метод был вызван. true, если дети узла должны быть клонированы
-    const clonImg = pinTemplate.querySelector(`img`);
+    const clonImg = clonElement.querySelector(`img`);
     clonElement.setAttribute(`style`, `left: ${pinNew.location.x}px; top: ${pinNew.location.y}px`); // Добавляет новый атрибут или изменяет значение существующего атрибута у выбранного элемента.
     clonImg.setAttribute(`src`, `${pinNew.autor.avatar}`);
     clonImg.setAttribute(`alt`, `${pinNew.offer.title}`);
@@ -182,6 +182,9 @@ const getCreateCard = function (newCards) {
     const popupPhotos = copyCard.querySelector(`.popup__photos`);
     const popupAvatar = copyCard.querySelector(`.popup__avatar`);
     const popupClose = copyCard.querySelector(`.popup__close`); // popup закрыть
+
+    // функция, которая добавляет класс `hidden` (как будто на каждую карточку нажал на крестик)
+    copyCard.classList.add(`hidden`);
 
     // добавим обработчик событий на крестик (закрыть)
     popupClose.addEventListener(`click`, function () {
@@ -251,7 +254,7 @@ const getCreateCard = function (newCards) {
     // description
     popupAvatar.setAttribute(`src`, `${newCards[i].autor.avatar}`);
     if (!newCards[i].autor.avatar) {
-      popupAvatar.setAttribute(`style`, `display: none`);
+      removeBlock(popupAvatar);
     }
 
     // photo
