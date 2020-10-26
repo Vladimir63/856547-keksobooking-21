@@ -193,6 +193,14 @@ const getCreateCard = function (newCards) {
       copyCard.classList.add(`hidden`);
     });
 
+    // добавим обработчик событий на кнопку Esc (закрыть)
+    document.addEventListener(`keydown`, function (evt) {
+      if (evt.key === `Escape`) {
+        evt.preventDefault();
+        copyCard.classList.add(`hidden`);
+      }
+    });
+
     // title
     popupTitle.textContent = `${newCards[i].offer.title}`;
     if (!newCards[i].offer.title) {
