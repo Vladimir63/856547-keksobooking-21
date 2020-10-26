@@ -100,12 +100,11 @@ function unique(array) {
 }
 
 // Функция создания случайного объявления
-const getBookingData = function (id) {
+const getBookingData = function () {
   const markerX = getRandomNumbers(0, 1160);
   const markerY = getRandomNumbers(130, 630);
   const newFeatures = createArrFeatures();
   return {
-    'id': id,
     'autor': {
       'avatar': `img/avatars/user0${getRandomNumbers(1, 8)}.png`
     },
@@ -142,11 +141,11 @@ const getCreatePins = function () {
 const getRenderingPins = function (pinsClone) {
   const templateElement = document.createDocumentFragment(); // Создает новый пустой DocumentFragment
 
-  pinsClone.forEach(function (pinNew) {
+  pinsClone.forEach(function (pinNew, i) {
     const clonElement = pinTemplate.cloneNode(true); // возвращает дубликат узла, из которого этот метод был вызван. true, если дети узла должны быть клонированы
     const clonImg = clonElement.querySelector(`img`);
     clonElement.setAttribute(`style`, `left: ${pinNew.location.x}px; top: ${pinNew.location.y}px`); // Добавляет новый атрибут или изменяет значение существующего атрибута у выбранного элемента.
-    clonElement.setAttribute(`id`, `${pinNew.id}`);
+    clonElement.setAttribute(`id`, `${i}`);
     clonImg.setAttribute(`src`, `${pinNew.autor.avatar}`);
     clonImg.setAttribute(`alt`, `${pinNew.offer.title}`);
     templateElement.appendChild(clonElement); // добавляет узел в конец списка дочерних элементов указанного родительского узла
@@ -185,7 +184,7 @@ const getCreateCard = function (newCards) {
     const popupAvatar = copyCard.querySelector(`.popup__avatar`);
     const popupClose = copyCard.querySelector(`.popup__close`); // popup закрыть
     // каждой карте добавляем атрибут id
-    copyCard.setAttribute(`id`, `card__${newCards[i].id}`);
+    copyCard.setAttribute(`id`, `card__${i}`);
     // функция, которая добавляет класс `hidden` (как будто на каждую карточку нажал на крестик)
     copyCard.classList.add(`hidden`);
 
@@ -291,8 +290,6 @@ const getCreateCard = function (newCards) {
 };
 
 // _________________module4 - task1_________________
-
-
 const adForm = document.querySelector(`.ad-form`);
 const mapFilters = document.querySelector(`.map__filters`);
 
@@ -520,9 +517,6 @@ setImgFiles();
 
 
 /* Вешаем обработчики событий на карточку объявления*/
-// const mapPins = document.querySelector(`.map__pins`);
-// const mapPinsChildren = mapPins.querySelectorAll(`map__card`);
-
 map.addEventListener(`click`, function (evt) {
 
   let target = evt.target;
@@ -534,18 +528,15 @@ map.addEventListener(`click`, function (evt) {
   if ((target.classList.contains(`map__pin`)) && (!target.classList.contains(`map__pin--main`))) {
 
     const addHidden = function () {
+      const mapPinsChildren = mapPins.querySelectorAll(`.map__card`);
+      let newArray = Array.from(mapPinsChildren);
 
-
-      for (let i = 0; i < MAP_PINS; i++) {
-        // mapPinsChildren.classList.add(`hidden`);
-        mapPins.children[i].classList.add(`hidden`);
-        // if (card.classList.contains(`hidden`)) {
-        //   card.classList.add(`hidden`);
-        // }
+      // пройтись по всем картам и добавить класс хидден, если класса нет
+      for (let i = 0; i < newArray.length; i++) {
+        newArray[i].classList.add(`hidden`);
       }
     };
     addHidden();
-    // пройтись по всем картам и добавить класс хидден, если класса нет
 
     const buttonId = target.getAttribute(`id`);
     const card = document.querySelector(`#card__${buttonId}`);
