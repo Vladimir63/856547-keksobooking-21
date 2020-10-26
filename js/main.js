@@ -100,11 +100,12 @@ function unique(array) {
 }
 
 // Функция создания случайного объявления
-const getBookingData = function () {
+const getBookingData = function (id) {
   const markerX = getRandomNumbers(0, 1160);
   const markerY = getRandomNumbers(130, 630);
   const newFeatures = createArrFeatures();
   return {
+    'id': id,
     'autor': {
       'avatar': `img/avatars/user0${getRandomNumbers(1, 8)}.png`
     },
@@ -132,7 +133,7 @@ const getBookingData = function () {
 const getCreatePins = function () {
   const arrPins = [];
   for (let i = 0; i < MAP_PINS; i++) {
-    arrPins.push(getBookingData()); // Метод push() добавляет один или более элементов в конец массива и возвращает новую длину массива.
+    arrPins.push(getBookingData(i)); // Метод push() добавляет один или более элементов в конец массива и возвращает новую длину массива.
   }
   return arrPins;
 };
@@ -145,6 +146,7 @@ const getRenderingPins = function (pinsClone) {
     const clonElement = pinTemplate.cloneNode(true); // возвращает дубликат узла, из которого этот метод был вызван. true, если дети узла должны быть клонированы
     const clonImg = clonElement.querySelector(`img`);
     clonElement.setAttribute(`style`, `left: ${pinNew.location.x}px; top: ${pinNew.location.y}px`); // Добавляет новый атрибут или изменяет значение существующего атрибута у выбранного элемента.
+    clonElement.setAttribute(`id`, `${pinNew.id}`);
     clonImg.setAttribute(`src`, `${pinNew.autor.avatar}`);
     clonImg.setAttribute(`alt`, `${pinNew.offer.title}`);
     templateElement.appendChild(clonElement); // добавляет узел в конец списка дочерних элементов указанного родительского узла
@@ -182,7 +184,8 @@ const getCreateCard = function (newCards) {
     const popupPhotos = copyCard.querySelector(`.popup__photos`);
     const popupAvatar = copyCard.querySelector(`.popup__avatar`);
     const popupClose = copyCard.querySelector(`.popup__close`); // popup закрыть
-
+    // каждой карте добавляем атрибут id
+    copyCard.setAttribute(`id`, `card__${newCards[i].id}`);
     // функция, которая добавляет класс `hidden` (как будто на каждую карточку нажал на крестик)
     copyCard.classList.add(`hidden`);
 
@@ -251,7 +254,7 @@ const getCreateCard = function (newCards) {
       removeBlock(popupDescription);
     }
 
-    // description
+    // avatar
     popupAvatar.setAttribute(`src`, `${newCards[i].autor.avatar}`);
     if (!newCards[i].autor.avatar) {
       removeBlock(popupAvatar);
@@ -260,7 +263,7 @@ const getCreateCard = function (newCards) {
     // photo
     for (let j = 0; j < newCards[i].offer.photos.length; j++) {
       popupPhoto.setAttribute(`src`, `${newCards[i].offer.photos[j]}`);
-      popupPhotos.appendChild(popupPhoto);
+      removeBlock(popupPhoto);
     }
     if (!newCards[i].offer.photos.length) {
       removeBlock(popupPhotos);
@@ -337,7 +340,6 @@ const activatePage = function () {
   // Записать данные координат в форму объявления
   adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
 };
-
 
 // Обработчики событий: активируют страницу кексобукинга
 // по нажатию левой кнопки мыши или клавиши Enter(когда метка в фокусе)
@@ -515,3 +517,38 @@ const setImgFiles = function () {
   document.querySelector(`#images`).setAttribute(`accept`, `image/*`);
 };
 setImgFiles();
+
+
+/* Вешаем обработчики событий на карточку объявления*/
+// const mapPins = document.querySelector(`.map__pins`);
+// const mapPinsChildren = mapPins.querySelectorAll(`map__card`);
+
+map.addEventListener(`click`, function (evt) {
+
+  let target = evt.target;
+
+  if (target.tagName === `IMG`) {
+    target = target.parentNode;
+  }
+
+  if ((target.classList.contains(`map__pin`)) && (!target.classList.contains(`map__pin--main`))) {
+
+    const addHidden = function () {
+
+
+      for (let i = 0; i < MAP_PINS; i++) {
+        // mapPinsChildren.classList.add(`hidden`);
+        mapPins.children[i].classList.add(`hidden`);
+        // if (card.classList.contains(`hidden`)) {
+        //   card.classList.add(`hidden`);
+        // }
+      }
+    };
+    addHidden();
+    // пройтись по всем картам и добавить класс хидден, если класса нет
+
+    const buttonId = target.getAttribute(`id`);
+    const card = document.querySelector(`#card__${buttonId}`);
+    card.classList.remove(`hidden`);
+  }
+});
