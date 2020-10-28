@@ -297,7 +297,7 @@ const getCreateCard = function (newCards) {
   mapPins.insertBefore(templateElementCard, mapFiltersContainer);
 };
 
-// _________________module4 - task1_________________
+// _________________module4 - task1 + module4 - task2_________________
 const adForm = document.querySelector(`.ad-form`);
 const mapFilters = document.querySelector(`.map__filters`);
 
@@ -318,8 +318,10 @@ const mapPin = document.querySelector(`.map__pin--main`); // главная ме
 // Узнаем координаты главной метки еще до активации страницы и записываем его в поле формы адреса
 const WIDTH_MAIN_PIN = 62;
 const HEIGHT_MAIN_PIN = 62;
+const HEIGHT_MAIN_PIN_AFTER = 22;
 const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
 const TOP_MAP_PIN = mapPin.offsetTop + HEIGHT_MAIN_PIN / 2;
+const TOP_MAP_PIN_SUM = TOP_MAP_PIN + HEIGHT_MAIN_PIN_AFTER + HEIGHT_MAIN_PIN / 2;
 
 // Записать данные координат в форму объявления
 adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
@@ -343,7 +345,7 @@ const activatePage = function () {
   getRenderingPins(pinsData);
   // Узнаем координаты главной метки еще до активации страницы и записываем его в поле формы адреса
   // Записать данные координат в форму объявления
-  adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
+  adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
 };
 
 // Обработчики событий: активируют страницу кексобукинга
