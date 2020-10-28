@@ -321,7 +321,7 @@ const HEIGHT_MAIN_PIN = 62;
 const HEIGHT_MAIN_PIN_AFTER = 22;
 const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
 const TOP_MAP_PIN = mapPin.offsetTop + HEIGHT_MAIN_PIN / 2;
-const TOP_MAP_PIN_SUM = TOP_MAP_PIN + HEIGHT_MAIN_PIN_AFTER;
+const TOP_MAP_PIN_SUM = TOP_MAP_PIN + HEIGHT_MAIN_PIN_AFTER + HEIGHT_MAIN_PIN / 2;
 
 // Записать данные координат в форму объявления
 adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
