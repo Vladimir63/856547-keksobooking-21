@@ -297,7 +297,7 @@ const getCreateCard = function (newCards) {
   mapPins.insertBefore(templateElementCard, mapFiltersContainer);
 };
 
-// _________________module4 - task1_________________
+// _________________module4 - task1 + module4 - task2_________________
 const adForm = document.querySelector(`.ad-form`);
 const mapFilters = document.querySelector(`.map__filters`);
 
