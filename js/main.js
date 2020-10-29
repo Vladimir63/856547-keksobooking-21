@@ -156,7 +156,6 @@ const getRenderingPins = function (pinsClone) {
 // Присваиваю константе значения функции создания и заполнения массива
 const pinsData = getCreatePins(); // 1 часть
 
-
 // _________________module3 - task2_________________
 
 const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`); // создаём DOM-элемент объявления (карточка объявления)
@@ -553,3 +552,5 @@ map.addEventListener(`click`, function (evt) {
     card.classList.remove(`hidden`);
   }
 });
+
+
