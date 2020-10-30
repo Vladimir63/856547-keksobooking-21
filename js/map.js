@@ -63,5 +63,8 @@
   window.activatePage = activatePage;
   window.buttonMouseDownHandler = buttonMouseDownHandler;
   window.buttonKeyDownHandler = buttonKeyDownHandler;
-
+  window.mapPin = mapPin;
+  window.WIDTH_MAIN_PIN = WIDTH_MAIN_PIN;
+  window.HEIGHT_MAIN_PIN = HEIGHT_MAIN_PIN;
+  window.HEIGHT_MAIN_PIN_AFTER = HEIGHT_MAIN_PIN_AFTER;
 })();

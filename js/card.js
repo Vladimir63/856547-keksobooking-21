@@ -13,6 +13,7 @@
     `conditioner`
   ];
   const getRandomNumbers = window.getRandomNumbers;
+  const unique = window.unique;
 
   // Функция создания случайного массива с фичами
   const createArrFeatures = function () {
@@ -26,16 +27,6 @@
     return uniqueArrfeatures;
   };
 
-  function unique(array) {
-    let result = [];
-
-    for (let str of array) {
-      if (!result.includes(str)) {
-        result.push(str);
-      }
-    }
-    return result;
-  }
 
   const removeBlock = function (div) {
     div.style.display = `none`;
@@ -146,7 +137,6 @@
       // photo
       for (let j = 0; j < newCards[i].offer.photos.length; j++) {
         popupPhoto.setAttribute(`src`, `${newCards[i].offer.photos[j]}`);
-        removeBlock(popupPhoto);
       }
       if (!newCards[i].offer.photos.length) {
         removeBlock(popupPhotos);
@@ -175,7 +165,6 @@
 
   window.getCreateCard = getCreateCard;
   window.removeBlock = removeBlock;
-  window.unique = unique;
   window.createArrFeatures = createArrFeatures;
 
 })();

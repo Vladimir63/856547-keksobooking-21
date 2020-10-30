@@ -185,5 +185,5 @@
   window.checkGuestNumber = checkGuestNumber;
   window.setGuestNumbers = setGuestNumbers;
   window.setImgFiles = setImgFiles;
-
+  window.addressForm = addressForm;
 })();

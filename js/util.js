@@ -8,6 +8,17 @@
     return Math.floor(Math.random() * (newMax - newMin + 1)) + newMin;
   };
 
-  window.getRandomNumbers = getRandomNumbers;
+  function unique(array) {
+    let result = [];
 
+    for (let str of array) {
+      if (!result.includes(str)) {
+        result.push(str);
+      }
+    }
+    return result;
+  }
+
+  window.getRandomNumbers = getRandomNumbers;
+  window.unique = unique;
 })();

@@ -1,10 +1,11 @@
 'use strict';
 
 (() => {
-
+  const MAP_PINS = 8;
   const map = document.querySelector(`.map`);
   const mapPins = document.querySelector(`.map__pins`);
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+  const getBookingData = window.getBookingData;
 
   const getRenderingPins = function (pinsClone) {
     const templateElement = document.createDocumentFragment();
@@ -20,6 +21,17 @@
     });
     mapPins.appendChild(templateElement);
   };
+
+
+  // Функция создания и заполнения массива
+  const getCreatePins = function () {
+    const arrPins = [];
+    for (let i = 0; i < MAP_PINS; i++) {
+      arrPins.push(getBookingData(i)); // Метод push() добавляет один или более элементов в конец массива и возвращает новую длину массива.
+    }
+    return arrPins;
+  };
+
 
   map.addEventListener(`click`, function (evt) {
 
@@ -48,5 +60,5 @@
   });
 
   window.getRenderingPins = getRenderingPins;
-
+  window.getCreatePins = getCreatePins;
 })();

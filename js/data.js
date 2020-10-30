@@ -2,8 +2,6 @@
 
 (() => {
 
-  const MAP_PINS = 8;
-
   const TITLES = [
     `И снова Токио`,
     `И снова Берлин`,
@@ -76,16 +74,5 @@
     };
   };
 
-  // Функция создания и заполнения массива
-  const getCreatePins = function () {
-    const arrPins = [];
-    for (let i = 0; i < MAP_PINS; i++) {
-      arrPins.push(getBookingData(i)); // Метод push() добавляет один или более элементов в конец массива и возвращает новую длину массива.
-    }
-    return arrPins;
-  };
-
   window.getBookingData = getBookingData;
-  window.getCreatePins = getCreatePins;
-
 })();
