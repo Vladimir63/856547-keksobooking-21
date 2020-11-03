@@ -156,19 +156,14 @@
       }
 
       for (let j = 0; j < newCards[i].offer.photos.length; j++) {
-        popupPhoto.setAttribute(`src`, `${newCards[i].offer.photos[j]}`);
-        popupPhotos.appendChild(popupPhoto);
+        const copyPhoto = popupPhoto.cloneNode();
+        copyPhoto.setAttribute(`src`, `${newCards[i].offer.photos[j]}`);
+        popupPhotos.appendChild(copyPhoto);
       }
 
       if (!newCards[i].offer.photos.length) {
         removeBlock(popupPhotos);
       }
-      // for (let j = 0; j < newCards[i].offer.photos.length; j++) {
-      //   popupPhoto.setAttribute(`src`, `${newCards[i].offer.photos[j]}`);
-      // }
-      // if (!newCards[i].offer.photos.length) {
-      //   removeBlock(popupPhotos);
-      // }
 
       // features
       while (popupFeatures.firstChild) {
