@@ -16,7 +16,7 @@
   const HEIGHT_MAIN_PIN = 62;
   const mapPin = document.querySelector(`.map__pin--main`);
   const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
-  const TOP_MAP_PIN = mapPin.offsetTop + HEIGHT_MAIN_PIN / 2;
+  const TOP_MAP_PIN = mapPin.offsetTop - HEIGHT_MAIN_PIN / 2;
   const mapFilters = document.querySelector(`.map__filters`);
   const TYPE_PRICE = {
     'bungalow': 0,

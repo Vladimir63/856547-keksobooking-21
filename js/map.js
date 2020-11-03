@@ -10,12 +10,10 @@
   const HEIGHT_MAIN_PIN = 62;
   const HEIGHT_MAIN_PIN_AFTER = 22;
   const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
-  const TOP_MAP_PIN = mapPin.offsetTop + HEIGHT_MAIN_PIN / 2;
-  const TOP_MAP_PIN_SUM = TOP_MAP_PIN + HEIGHT_MAIN_PIN_AFTER + HEIGHT_MAIN_PIN / 2;
+  const TOP_MAP_PIN_SUM = mapPin.offsetTop + HEIGHT_MAIN_PIN_AFTER;
   const getCreatePins = window.getCreatePins;
   const getCreateCard = window.getCreateCard;
   const getRenderingPins = window.getRenderingPins;
-
 
   const pinsData = getCreatePins();
 
@@ -67,4 +65,6 @@
   window.WIDTH_MAIN_PIN = WIDTH_MAIN_PIN;
   window.HEIGHT_MAIN_PIN = HEIGHT_MAIN_PIN;
   window.HEIGHT_MAIN_PIN_AFTER = HEIGHT_MAIN_PIN_AFTER;
+  window.LEFT_MAP_PIN = LEFT_MAP_PIN;
+  window.TOP_MAP_PIN_SUM = TOP_MAP_PIN_SUM;
 })();
