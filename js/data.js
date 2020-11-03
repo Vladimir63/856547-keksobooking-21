@@ -26,12 +26,6 @@
     `14:00`
   ];
 
-  const PHOTOS = [
-    `http://o0.github.io/assets/images/tokyo/hotel1.jpg`,
-    `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
-    `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
-  ];
-
   const DESCRIPTIONS = [
     `Больше напоминает старую будку, но зато чисто`,
     `Отлиное расположение для любителей искусства, рядом расположена Кексогалерея и музей восковых фигур Мисье Кекса`,
@@ -45,11 +39,13 @@
 
   const getRandomNumbers = window.getRandomNumbers;
   const createArrFeatures = window.createArrFeatures;
+  const createArrPhotos = window.createArrPhotos;
 
   const getBookingData = function () {
     const markerX = getRandomNumbers(0, 1160);
     const markerY = getRandomNumbers(130, 630);
     const newFeatures = createArrFeatures();
+    const newPhotos = createArrPhotos();
     return {
       'autor': {
         'avatar': `img/avatars/user0${getRandomNumbers(1, 8)}.png`
@@ -65,7 +61,7 @@
         'checkuot': TIME[(getRandomNumbers(0, 2))],
         "features": newFeatures,
         'description': DESCRIPTIONS[getRandomNumbers(0, DESCRIPTIONS.length - 1)],
-        'photos': Array(getRandomNumbers(1, 4)).fill(PHOTOS[getRandomNumbers(0, PHOTOS.length - 1)])
+        'photos': newPhotos
       },
       'location': {
         'x': markerX,

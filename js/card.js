@@ -12,6 +12,11 @@
     `elevator`,
     `conditioner`
   ];
+  const PHOTOS = [
+    `http://o0.github.io/assets/images/tokyo/hotel1.jpg`,
+    `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
+    `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
+  ];
   const getRandomNumbers = window.getRandomNumbers;
   const unique = window.unique;
 
@@ -27,6 +32,17 @@
     return uniqueArrfeatures;
   };
 
+  // Функция создания случайного массива с фичами
+  const createArrPhotos = function () {
+    const arrPhotos = [];
+    const arrPhotosLength = getRandomNumbers(0, PHOTOS.length);
+    for (let i = 0; i < arrPhotosLength; i++) {
+      const m = Math.floor(Math.random() * PHOTOS.length);
+      arrPhotos.push(PHOTOS[m]);
+    }
+    const uniqueArrPhotos = unique(arrPhotos);
+    return uniqueArrPhotos;
+  };
 
   const removeBlock = function (div) {
     div.style.display = `none`;
@@ -135,12 +151,24 @@
       }
 
       // photo
+      while (popupPhotos.firstChild) {
+        popupPhotos.removeChild(popupPhotos.lastChild);
+      }
+
       for (let j = 0; j < newCards[i].offer.photos.length; j++) {
         popupPhoto.setAttribute(`src`, `${newCards[i].offer.photos[j]}`);
+        popupPhotos.appendChild(popupPhoto);
       }
+
       if (!newCards[i].offer.photos.length) {
         removeBlock(popupPhotos);
       }
+      // for (let j = 0; j < newCards[i].offer.photos.length; j++) {
+      //   popupPhoto.setAttribute(`src`, `${newCards[i].offer.photos[j]}`);
+      // }
+      // if (!newCards[i].offer.photos.length) {
+      //   removeBlock(popupPhotos);
+      // }
 
       // features
       while (popupFeatures.firstChild) {
@@ -166,5 +194,6 @@
   window.getCreateCard = getCreateCard;
   window.removeBlock = removeBlock;
   window.createArrFeatures = createArrFeatures;
+  window.createArrPhotos = createArrPhotos;
 
 })();
