@@ -2,15 +2,12 @@
 (function () {
 
   const WIDTH_MAIN_PIN = window.WIDTH_MAIN_PIN;
-  // const HEIGHT_MAIN_PIN = window.HEIGHT_MAIN_PIN;
   const HEIGHT_MAIN_PIN_AFTER = window.HEIGHT_MAIN_PIN_AFTER;
-  // const HEIGHT_MAIN_PIN_TOTAL = HEIGHT_MAIN_PIN_AFTER + HEIGHT_MAIN_PIN;
 
-
-  const MIN_Y = 130;
-  const MAX_Y = 630;
-  const MIN_X = 0;
-  const MAX_X = 1200;
+  const MIN_Y = 130 - HEIGHT_MAIN_PIN_AFTER;
+  const MAX_Y = 630 - HEIGHT_MAIN_PIN_AFTER;
+  const MIN_X = 0 - WIDTH_MAIN_PIN / 2;
+  const MAX_X = 1200 - WIDTH_MAIN_PIN / 2;
   const mapPin = window.mapPin;
   const addressForm = window.addressForm;
 
@@ -43,21 +40,12 @@
       };
       // ограничитель зоны передвижения
       const BORDER = {
-        TOP: MIN_Y - HEIGHT_MAIN_PIN_AFTER,
-        BOTTOM: MAX_Y - HEIGHT_MAIN_PIN_AFTER,
-        LEFT: MIN_X - WIDTH_MAIN_PIN / 2,
-        RIGHT: MAX_X - WIDTH_MAIN_PIN / 2
+        TOP: MIN_Y,
+        BOTTOM: MAX_Y,
+        LEFT: MIN_X,
+        RIGHT: MAX_X
       };
-      /*
-      4.1.Приблизительный адрес квартиры указывается перемещением специальной метки по карте Токио.Содержимое поля адреса должно соответствовать координатам метки:
-      1.в неактивном состоянии страницы метка круглая, поэтому в поле адреса подставляются координаты центра метки;
-      2.при переходе страницы в активное состояние в поле адреса подставляются координаты острого конца метки;
-      3.при перемещении(mousemove) метки в поле адреса подставляются координаты острого конца метки.
 
-      1. работает как надо, считает центр (601, 344)
-      2. метка 62х62. значит 62/2 до края метки + высота ножки = 31 + 22 = 53. прибавляем к высоте 53 = 397. такая координата при активации страницы.
-      3. 601 397 - д.б. начало.
-      */
       // ограничение перемещения по Х
       if (mapPinPosition.x >= BORDER.LEFT && mapPinPosition.x <= BORDER.RIGHT) {
         mapPin.style.left = `${mapPinPosition.x}px`;
@@ -67,8 +55,21 @@
         mapPin.style.top = `${mapPinPosition.y}px`;
       }
 
+      if (mapPinPosition.y + HEIGHT_MAIN_PIN_AFTER > MAX_Y) {
+        mapPinPosition.y = MAX_Y;
+      }
+      if (mapPinPosition.y - HEIGHT_MAIN_PIN_AFTER < MIN_Y) {
+        mapPinPosition.y = MIN_Y;
+      }
+      if (mapPinPosition.x - WIDTH_MAIN_PIN / 2 < MIN_X) {
+        mapPinPosition.x = MIN_X;
+      }
+      if (mapPinPosition.x + WIDTH_MAIN_PIN / 2 > MAX_X) {
+        mapPinPosition.x = MAX_X;
+      }
+
       // addressForm.setAttribute(`value`, mapPinPosition.x + `, ` + mapPinPosition.y);
-      addressForm.value = `${mapPinPosition.x + WIDTH_MAIN_PIN / 2} ${mapPinPosition.y + HEIGHT_MAIN_PIN_AFTER}`;
+      addressForm.value = `${mapPinPosition.x + WIDTH_MAIN_PIN / 2}, ${mapPinPosition.y + HEIGHT_MAIN_PIN_AFTER}`;
       //  если логнуть, то будет смещение на 22
       // console.log(mapPin.style.top);
     };
@@ -83,4 +84,3 @@
   });
 
 })();
-
