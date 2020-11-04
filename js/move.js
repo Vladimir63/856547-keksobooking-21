@@ -68,10 +68,7 @@
         mapPinPosition.x = MAX_X;
       }
 
-      // addressForm.setAttribute(`value`, mapPinPosition.x + `, ` + mapPinPosition.y);
       addressForm.value = `${mapPinPosition.x + WIDTH_MAIN_PIN / 2}, ${mapPinPosition.y + HEIGHT_MAIN_PIN_AFTER}`;
-      //  если логнуть, то будет смещение на 22
-      // console.log(mapPin.style.top);
     };
 
     const onMouseUp = (upEvt) => {
