@@ -2,15 +2,12 @@
 (function () {
 
   const WIDTH_MAIN_PIN = window.WIDTH_MAIN_PIN;
-  const HEIGHT_MAIN_PIN = window.HEIGHT_MAIN_PIN;
   const HEIGHT_MAIN_PIN_AFTER = window.HEIGHT_MAIN_PIN_AFTER;
-  const HEIGHT_MAIN_PIN_TOTAL = HEIGHT_MAIN_PIN_AFTER + HEIGHT_MAIN_PIN;
 
-
-  const MIN_Y = 130;
-  const MAX_Y = 630;
-  const MIN_X = 0;
-  const MAX_X = 1160;
+  const MIN_Y = 130 - HEIGHT_MAIN_PIN_AFTER;
+  const MAX_Y = 630 - HEIGHT_MAIN_PIN_AFTER;
+  const MIN_X = 0 - WIDTH_MAIN_PIN / 2;
+  const MAX_X = 1200 - WIDTH_MAIN_PIN / 2;
   const mapPin = window.mapPin;
   const addressForm = window.addressForm;
 
@@ -43,21 +40,11 @@
       };
       // ограничитель зоны передвижения
       const BORDER = {
-        TOP: MIN_Y - mapPin.offsetHeight - HEIGHT_MAIN_PIN_TOTAL,
-        BOTTOM: MAX_Y - mapPin.offsetHeight + HEIGHT_MAIN_PIN_TOTAL,
+        TOP: MIN_Y,
+        BOTTOM: MAX_Y,
         LEFT: MIN_X,
-        RIGHT: MAX_X - mapPin.offsetWidth + WIDTH_MAIN_PIN
+        RIGHT: MAX_X
       };
-
-      // логика ограничения: пользователь может поставить метку в позицию 0,0 / 0,1200 / 630,0 / 630,1200
-      // отсчет ведется на ножке метки.
-      // теперь style из button совпадает с данными из addressForm
-      // или я считаю не с того места?
-      // изначально у главной метки были координаты 602, 459 в поле адрес, но в браузере в инспекторе кода было вот так <button class="map__pin map__pin--main" style="left: 570px; top: 375px;">
-      // получается, гдето отсчет не верный. или значения из поля адрес не должны совпадать с стилем кнопки??
-      // до активации: 602, 406 в поле адреса    и     <button class="map__pin map__pin--main" style="left: 570px; top: 375px;">
-      // после 602, 459 против <button class="map__pin map__pin--main" style="left: 570px; top: 375px;">
-      // когда метка двигается начинает совпадать
 
       // ограничение перемещения по Х
       if (mapPinPosition.x >= BORDER.LEFT && mapPinPosition.x <= BORDER.RIGHT) {
@@ -68,9 +55,23 @@
         mapPin.style.top = `${mapPinPosition.y}px`;
       }
 
+      if (mapPinPosition.y + HEIGHT_MAIN_PIN_AFTER > MAX_Y) {
+        mapPinPosition.y = MAX_Y;
+      }
+      if (mapPinPosition.y - HEIGHT_MAIN_PIN_AFTER < MIN_Y) {
+        mapPinPosition.y = MIN_Y;
+      }
+      if (mapPinPosition.x - WIDTH_MAIN_PIN / 2 < MIN_X) {
+        mapPinPosition.x = MIN_X;
+      }
+      if (mapPinPosition.x + WIDTH_MAIN_PIN / 2 > MAX_X) {
+        mapPinPosition.x = MAX_X;
+      }
+
       // addressForm.setAttribute(`value`, mapPinPosition.x + `, ` + mapPinPosition.y);
-      addressForm.value = `${mapPinPosition.x} ${mapPinPosition.y}`;
-      // window.fillAddress();
+      addressForm.value = `${mapPinPosition.x + WIDTH_MAIN_PIN / 2}, ${mapPinPosition.y + HEIGHT_MAIN_PIN_AFTER}`;
+      //  если логнуть, то будет смещение на 22
+      // console.log(mapPin.style.top);
     };
 
     const onMouseUp = (upEvt) => {
@@ -83,4 +84,3 @@
   });
 
 })();
-
