@@ -6,11 +6,14 @@
 
   const load = function (onLoad, onError) {
     const xhr = new XMLHttpRequest();
-    xhr.responseType = `json`;
+    xhr.responseType = `json`; // формат ответа json
 
     xhr.addEventListener(`load`, function () {
       if (xhr.status === 200) {
         onLoad(xhr.response); // в функцию поместили данные
+
+        // console.log(xhr.response);
+
       } else {
         onError(`Статус ответа:  ${xhr.status} ${xhr.statusText}`);
       }

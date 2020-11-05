@@ -14,7 +14,9 @@
   const getCreatePins = window.getCreatePins;
   const getCreateCard = window.getCreateCard;
   const getRenderingPins = window.getRenderingPins;
+  const load = window.load;
 
+  // const pinsData = getCreatePins();
   const pinsData = getCreatePins();
 
 
@@ -29,6 +31,7 @@
       mapFilters.children[i].removeAttribute(`disabled`);
     }
 
+    load(onSuccess, onError);
     getCreateCard(pinsData);
     getRenderingPins(pinsData);
     adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
@@ -54,6 +57,14 @@
     }
   };
 
+  const onSuccess = function (res) {
+    window.pin.render(res);
+  };
+
+  const onError = function (res) {
+    window.message.showError(res);
+  };
+
   // Вешаем 2 обработчика событий на главную метку
   mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
   mapPin.addEventListener(`mousedown`, buttonMouseDownHandler);
@@ -67,4 +78,7 @@
   window.HEIGHT_MAIN_PIN_AFTER = HEIGHT_MAIN_PIN_AFTER;
   window.LEFT_MAP_PIN = LEFT_MAP_PIN;
   window.TOP_MAP_PIN_SUM = TOP_MAP_PIN_SUM;
+  window.map = map;
+  window.onSuccess = onSuccess;
+  window.onError = onError;
 })();
