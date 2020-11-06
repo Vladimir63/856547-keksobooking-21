@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const MAP_PINS = 8;
+  // const MAP_PINS = 8;
   const map = document.querySelector(`.map`);
   const mapPins = document.querySelector(`.map__pins`);
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
@@ -24,9 +24,9 @@
 
 
   // Функция создания и заполнения массива
-  const getCreatePins = function () {
+  const getCreatePins = function (arr) {
     const arrPins = [];
-    for (let i = 0; i < MAP_PINS; i++) {
+    for (let i = 0; i < arr.length; i++) {
       arrPins.push(getBookingData(i)); // Метод push() добавляет один или более элементов в конец массива и возвращает новую длину массива.
     }
     return arrPins;

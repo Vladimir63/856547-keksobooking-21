@@ -13,6 +13,7 @@
   const templateError = document.querySelector(`#error`).content.querySelector(`.error`);
   const main = document.querySelector(`main`);
   const errorButton = document.querySelector(`#error`).content.querySelector(`.error__button`);
+  const templetSuccess = document.querySelector(`#success`).content.querySelector(`.success`);
   const activatePage = window.activatePage;
 
 
@@ -54,11 +55,61 @@
 
   const closeError = function () {
     const error = main.querySelector(`.error`);
+    const success = main.querySelector(`.success`);
     if (error) {
       error.remove();
       document.removeEventListener(`keydown`, onDocumentKeydown);
+    } else if (success) {
+      success.remove();
+      document.removeEventListener(`keydown`, onDocumentKeydown);
     }
   };
+
+
+  const submittedForm = function () {
+    const success = templetSuccess.cloneNode(true);
+
+    success.addEventListener(`click`, function () {
+      closeError();
+    });
+
+    document.addEventListener(`keydown`, onDocumentKeydown);
+
+    main.appendChild(success);
+  };
+
+  const notSubmittedForm = function () {
+    const errorForm = templateError.cloneNode(true);
+
+    errorForm.addEventListener(`click`, function () {
+      closeError();
+    });
+
+    document.addEventListener(`keydown`, onDocumentKeydown);
+
+    main.appendChild(errorForm);
+  };
+
+  const similarListmMapPins = document.querySelector(`.map__pins`);
+
+  const renderForm = function () {
+    const success = submittedForm();
+    const error = notSubmittedForm();
+
+    if (success) {
+      similarListmMapPins.appendChild(success);
+    } else if (error) {
+      similarListmMapPins.appendChild(error);
+    }
+
+  };
+
+  let button = document.querySelector(`.ad-form__submit`);
+
+  button.addEventListener(`click`, function (evt) {
+    evt.preventDefault();
+    renderForm();
+  });
 
   // Вешаем обработчик событий на кнопку ошибки
   errorButton.addEventListener(`keydown`, errorButtonMouseDownHandler);
@@ -67,7 +118,8 @@
 
   window.message = {
     showError,
-    closeError
+    closeError,
+    renderForm
   };
 })();
 

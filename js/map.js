@@ -37,7 +37,7 @@
 
   const onSuccess = function (res) {
     // console.log(res);
-    window.pin.render(res);
+    window.pin.render(res.slice(0, 8));
     getCreateCard(res);
     getRenderingPins(res);
   };

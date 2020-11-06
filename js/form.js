@@ -18,6 +18,7 @@
   const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
   const TOP_MAP_PIN = mapPin.offsetTop - HEIGHT_MAIN_PIN / 2;
   const mapFilters = document.querySelector(`.map__filters`);
+  // const onClear = document.querySelector(`.ad-form__reset`);
   const TYPE_PRICE = {
     'bungalow': 0,
     'flat': 1000,
@@ -178,6 +179,14 @@
     document.querySelector(`#images`).setAttribute(`accept`, `image/*`);
   };
   setImgFiles();
+
+
+  adForm.addEventListener(`submit`, function (evt) {
+    window.upload(new FormData(adForm), function () { // Объект FormData предназначен для кодирования данных, которые необходимо отправить на сервер посредством технологии AJAX (XMLHttpRequest)
+    });
+    evt.preventDefault();
+  });
+
 
   window.createAttributesForm = createAttributesForm;
   window.validationTime = validationTime;
