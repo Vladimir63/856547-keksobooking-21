@@ -2,7 +2,7 @@
 
 (function () {
   const URL = `https://21.javascript.pages.academy/keksobooking/data`;
-  const TIMEOUT_IN_MS = 10000;
+  const TIMEOUT_IN_MS = 10;
 
   window.load = function (onSuccess, onError) {
     const xhr = new XMLHttpRequest(); // созадем запрос

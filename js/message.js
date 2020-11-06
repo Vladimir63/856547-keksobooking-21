@@ -12,6 +12,8 @@
 (function () {
   const templateError = document.querySelector(`#error`).content.querySelector(`.error`);
   const main = document.querySelector(`main`);
+  const errorButton = document.querySelector(`#error`).content.querySelector(`.error__button`);
+  const activatePage = window.activatePage;
 
 
   const showError = function (errorMessage) {
@@ -24,6 +26,24 @@
     document.addEventListener(`keydown`, onDocumentKeydown);
 
     main.appendChild(error);
+  };
+
+  const errorButtonMouseDownHandler = function (evt) {
+    if (evt.button === 0) {
+      activatePage();
+      // Удаляем обработчики
+      errorButton.removeEventListener(`mousedown`, errorButtonMouseDownHandler);
+      errorButton.removeEventListener(`keydown`, errorButtonKeyDownHandler);
+    }
+  };
+
+  const errorButtonKeyDownHandler = function (evt) {
+    if (evt.key === `Enter`) {
+      activatePage();
+      // Удаляем обработчики
+      errorButton.removeEventListener(`mousedown`, errorButtonMouseDownHandler);
+      errorButton.removeEventListener(`keydown`, errorButtonKeyDownHandler);
+    }
   };
 
   const onDocumentKeydown = function (evt) {
@@ -40,8 +60,15 @@
     }
   };
 
+  // Вешаем обработчик событий на кнопку ошибки
+  errorButton.addEventListener(`keydown`, errorButtonMouseDownHandler);
+  errorButton.addEventListener(`mousedown`, errorButtonKeyDownHandler);
+
+
   window.message = {
     showError,
     closeError
   };
 })();
+
+

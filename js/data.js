@@ -47,7 +47,7 @@
     const newFeatures = createArrFeatures();
     const newPhotos = createArrPhotos();
     return {
-      'autor': {
+      'author': {
         'avatar': `img/avatars/user0${getRandomNumbers(1, 8)}.png`
       },
       'offer': {

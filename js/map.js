@@ -11,31 +11,9 @@
   const HEIGHT_MAIN_PIN_AFTER = 22;
   const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
   const TOP_MAP_PIN_SUM = mapPin.offsetTop + HEIGHT_MAIN_PIN_AFTER;
-  const getCreatePins = window.getCreatePins;
   const getCreateCard = window.getCreateCard;
   const getRenderingPins = window.getRenderingPins;
   const load = window.load;
-
-  // const pinsData = getCreatePins();
-  // const pinsData = getCreatePins();
-
-
-  const activatePage = function () {
-    map.classList.remove(`map--faded`);
-    adForm.classList.remove(`ad-form--disabled`);
-    mapFilters.classList.remove(`ad-form--disabled`);
-    for (let i = 0; i < adForm.children.length; i++) {
-      adForm.children[i].removeAttribute(`disabled`);
-    }
-    for (let i = 0; i < mapFilters.children.length; i++) {
-      mapFilters.children[i].removeAttribute(`disabled`);
-    }
-
-    load(onSuccess, onError);
-    // getCreateCard(pinsData);
-    // getRenderingPins(pinsData);
-    adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
-  };
 
   // Обработчики событий: активируют страницу кексобукинга
   // по нажатию левой кнопки мыши или клавиши Enter(когда метка в фокусе)
@@ -58,13 +36,33 @@
   };
 
   const onSuccess = function (res) {
-    console.log(res);
+    // console.log(res);
     window.pin.render(res);
+    getCreateCard(res);
+    getRenderingPins(res);
   };
 
   const onError = function (res) {
     window.message.showError(res);
   };
+
+  const activatePage = function () {
+    map.classList.remove(`map--faded`);
+    adForm.classList.remove(`ad-form--disabled`);
+    mapFilters.classList.remove(`ad-form--disabled`);
+    for (let i = 0; i < adForm.children.length; i++) {
+      adForm.children[i].removeAttribute(`disabled`);
+    }
+    for (let i = 0; i < mapFilters.children.length; i++) {
+      mapFilters.children[i].removeAttribute(`disabled`);
+    }
+
+    load(onSuccess, onError);
+    // getCreateCard(pinsData);
+    // getRenderingPins(pinsData);
+    adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
+  };
+
 
   // Вешаем 2 обработчика событий на главную метку
   mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
