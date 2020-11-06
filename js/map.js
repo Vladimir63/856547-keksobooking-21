@@ -17,7 +17,7 @@
   const load = window.load;
 
   // const pinsData = getCreatePins();
-  const pinsData = getCreatePins();
+  // const pinsData = getCreatePins();
 
 
   const activatePage = function () {
@@ -32,8 +32,8 @@
     }
 
     load(onSuccess, onError);
-    getCreateCard(pinsData);
-    getRenderingPins(pinsData);
+    // getCreateCard(pinsData);
+    // getRenderingPins(pinsData);
     adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
   };
 
@@ -58,6 +58,7 @@
   };
 
   const onSuccess = function (res) {
+    console.log(res);
     window.pin.render(res);
   };
 

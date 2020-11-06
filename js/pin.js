@@ -44,7 +44,7 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
-  window.load(getCreatePins, errorHandler);
+  // window.load(getCreatePins, errorHandler);
 
   map.addEventListener(`click`, function (evt) {
 
