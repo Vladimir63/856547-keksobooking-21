@@ -36,7 +36,6 @@
   };
 
   const onSuccess = function (res) {
-    // console.log(res);
     window.pin.render(res.slice(0, 8));
     getCreateCard(res);
     getRenderingPins(res);
@@ -58,8 +57,6 @@
     }
 
     load(onSuccess, onError);
-    // getCreateCard(pinsData);
-    // getRenderingPins(pinsData);
     adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
   };
 

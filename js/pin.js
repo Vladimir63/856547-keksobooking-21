@@ -1,7 +1,6 @@
 'use strict';
 
 (() => {
-  // const MAP_PINS = 8;
   const map = document.querySelector(`.map`);
   const mapPins = document.querySelector(`.map__pins`);
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
@@ -31,20 +30,6 @@
     }
     return arrPins;
   };
-
-  // const errorHandler = function (errorMessage) {
-  //   let node = document.createElement(`div`);
-  //   node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
-  //   node.style.position = `absolute`;
-  //   node.style.left = 0;
-  //   node.style.right = 0;
-  //   node.style.fontSize = `30px`;
-
-  //   node.textContent = errorMessage;
-  //   document.body.insertAdjacentElement(`afterbegin`, node);
-  // };
-
-  // window.load(getCreatePins, errorHandler);
 
   map.addEventListener(`click`, function (evt) {
 

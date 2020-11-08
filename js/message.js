@@ -1,14 +1,5 @@
 'use strict';
 
-// < !--Сообщение об ошибке создания объявления-- >
-// <template id="error">
-//   <div class="error">
-//     <p class="error__message">Ошибка загрузки объявления</p>
-//     <button class="error__button">Попробовать снова</button>
-//   </div>
-// </template>
-
-
 (function () {
   const templateError = document.querySelector(`#error`).content.querySelector(`.error`);
   const main = document.querySelector(`main`);

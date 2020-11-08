@@ -2,7 +2,7 @@
 
 (function () {
   const URL = `https://21.javascript.pages.academy/keksobooking/data`;
-  const TIMEOUT_IN_MS = 10000;
+  const TIMEOUT_IN_MS = 50;
 
   window.load = function (onSuccess, onError) {
     const xhr = new XMLHttpRequest(); // созадем запрос
@@ -29,7 +29,7 @@
           break;
 
         default:
-          error = `Cтатус ответа: : ` + xhr.status + ` ` + xhr.statusText;
+          error = `Cтатус ответа:  ${xhr.status} ${xhr.statusText}`;
       }
 
       if (error) {
@@ -42,7 +42,7 @@
     });
 
     xhr.addEventListener(`timeout`, function () {
-      onError(`Запрос не успел выполниться за ` + xhr.timeout + ` мс`);
+      onError(`Запрос не успел выполниться за ${xhr.timeout} мс`);
     });
 
     xhr.timeout = TIMEOUT_IN_MS; // 10s
