@@ -182,19 +182,12 @@
   setImgFiles();
 
   adForm.addEventListener(`submit`, function (evt) {
-    window.upload(new FormData(adForm), function () { // Объект FormData предназначен для кодирования данных, которые необходимо отправить на сервер посредством технологии AJAX (XMLHttpRequest)
-    });
     evt.preventDefault();
-  });
-
-  adForm.addEventListener(`submit`, function (evt) {
-    evt.preventDefault();
-    window.upload(new FormData(adForm), onSuccess, onError);
+    window.upload(new FormData(adForm), onSuccess, onError);// Объект FormData предназначен для кодирования данных, которые необходимо отправить на сервер посредством технологии AJAX (XMLHttpRequest)
   });
 
   const onSuccess = function (res) {
     window.message.showSuccess(res);
-
   };
 
   const onError = function (res) {
