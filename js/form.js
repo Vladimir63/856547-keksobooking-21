@@ -181,7 +181,6 @@
   };
   setImgFiles();
 
-
   adForm.addEventListener(`submit`, function (evt) {
     window.upload(new FormData(adForm), function () { // Объект FormData предназначен для кодирования данных, которые необходимо отправить на сервер посредством технологии AJAX (XMLHttpRequest)
     });
