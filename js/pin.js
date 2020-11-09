@@ -1,7 +1,6 @@
 'use strict';
 
 (() => {
-  const MAP_PINS = 8;
   const map = document.querySelector(`.map`);
   const mapPins = document.querySelector(`.map__pins`);
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
@@ -15,7 +14,7 @@
       const clonImg = clonElement.querySelector(`img`);
       clonElement.setAttribute(`style`, `left: ${pinNew.location.x}px; top: ${pinNew.location.y}px`);
       clonElement.setAttribute(`id`, `${i}`);
-      clonImg.setAttribute(`src`, `${pinNew.autor.avatar}`);
+      clonImg.setAttribute(`src`, `${pinNew.author.avatar}`);
       clonImg.setAttribute(`alt`, `${pinNew.offer.title}`);
       templateElement.appendChild(clonElement);
     });
@@ -24,14 +23,13 @@
 
 
   // Функция создания и заполнения массива
-  const getCreatePins = function () {
+  const getCreatePins = function (arr) {
     const arrPins = [];
-    for (let i = 0; i < MAP_PINS; i++) {
+    for (let i = 0; i < arr.length; i++) {
       arrPins.push(getBookingData(i)); // Метод push() добавляет один или более элементов в конец массива и возвращает новую длину массива.
     }
     return arrPins;
   };
-
 
   map.addEventListener(`click`, function (evt) {
 
@@ -61,4 +59,8 @@
 
   window.getRenderingPins = getRenderingPins;
   window.getCreatePins = getCreatePins;
+  window.pin = {
+    render: getCreatePins
+  };
+
 })();

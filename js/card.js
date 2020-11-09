@@ -145,8 +145,8 @@
       }
 
       // avatar
-      popupAvatar.setAttribute(`src`, `${newCards[i].autor.avatar}`);
-      if (!newCards[i].autor.avatar) {
+      popupAvatar.setAttribute(`src`, `${newCards[i].author.avatar}`);
+      if (!newCards[i].author.avatar) {
         removeBlock(popupAvatar);
       }
 

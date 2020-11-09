@@ -11,28 +11,9 @@
   const HEIGHT_MAIN_PIN_AFTER = 22;
   const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
   const TOP_MAP_PIN_SUM = mapPin.offsetTop + HEIGHT_MAIN_PIN_AFTER;
-  const getCreatePins = window.getCreatePins;
   const getCreateCard = window.getCreateCard;
   const getRenderingPins = window.getRenderingPins;
-
-  const pinsData = getCreatePins();
-
-
-  const activatePage = function () {
-    map.classList.remove(`map--faded`);
-    adForm.classList.remove(`ad-form--disabled`);
-    mapFilters.classList.remove(`ad-form--disabled`);
-    for (let i = 0; i < adForm.children.length; i++) {
-      adForm.children[i].removeAttribute(`disabled`);
-    }
-    for (let i = 0; i < mapFilters.children.length; i++) {
-      mapFilters.children[i].removeAttribute(`disabled`);
-    }
-
-    getCreateCard(pinsData);
-    getRenderingPins(pinsData);
-    adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
-  };
+  const load = window.load;
 
   // Обработчики событий: активируют страницу кексобукинга
   // по нажатию левой кнопки мыши или клавиши Enter(когда метка в фокусе)
@@ -54,11 +35,42 @@
     }
   };
 
+  const onSuccess = function (res) {
+    window.pin.render(res.slice);
+    getCreateCard(res);
+    getRenderingPins(res);
+  };
+
+  const onError = function (res) {
+    window.message.showError(res);
+  };
+
+  const activatePage = function () {
+    map.classList.remove(`map--faded`);
+    adForm.classList.remove(`ad-form--disabled`);
+    mapFilters.classList.remove(`ad-form--disabled`);
+    for (let i = 0; i < adForm.children.length; i++) {
+      adForm.children[i].removeAttribute(`disabled`);
+    }
+    for (let i = 0; i < mapFilters.children.length; i++) {
+      mapFilters.children[i].removeAttribute(`disabled`);
+    }
+
+    load(onSuccess, onError);
+    adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
+  };
+
+  const clearPage = function () {
+    adForm.reset();
+  };
+
+
   // Вешаем 2 обработчика событий на главную метку
   mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
   mapPin.addEventListener(`mousedown`, buttonMouseDownHandler);
 
   window.activatePage = activatePage;
+  window.clearPage = clearPage;
   window.buttonMouseDownHandler = buttonMouseDownHandler;
   window.buttonKeyDownHandler = buttonKeyDownHandler;
   window.mapPin = mapPin;
@@ -67,4 +79,7 @@
   window.HEIGHT_MAIN_PIN_AFTER = HEIGHT_MAIN_PIN_AFTER;
   window.LEFT_MAP_PIN = LEFT_MAP_PIN;
   window.TOP_MAP_PIN_SUM = TOP_MAP_PIN_SUM;
+  window.map = map;
+  window.onSuccess = onSuccess;
+  window.onError = onError;
 })();
