@@ -18,7 +18,8 @@
   const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
   const TOP_MAP_PIN = mapPin.offsetTop - HEIGHT_MAIN_PIN / 2;
   const mapFilters = document.querySelector(`.map__filters`);
-  // const onClear = document.querySelector(`.ad-form__reset`);
+  const onClear = document.querySelector(`.ad-form__reset`);
+  const clearPage = window.clearPage;
   const TYPE_PRICE = {
     'bungalow': 0,
     'flat': 1000,
@@ -187,6 +188,24 @@
     evt.preventDefault();
   });
 
+  adForm.addEventListener(`submit`, function (evt) {
+    evt.preventDefault();
+    window.upload(new FormData(adForm), onSuccess, onError);
+  });
+
+  const onSuccess = function (res) {
+    window.message.showSuccess(res);
+
+  };
+
+  const onError = function (res) {
+    window.message.showError(res);
+  };
+
+  onClear.addEventListener(`click`, function (evt) {
+    evt.preventDefault();
+    clearPage();
+  });
 
   window.createAttributesForm = createAttributesForm;
   window.validationTime = validationTime;

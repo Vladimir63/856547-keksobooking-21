@@ -36,7 +36,7 @@
   };
 
   const onSuccess = function (res) {
-    window.pin.render(res.slice(0, 8));
+    window.pin.render(res.slice);
     getCreateCard(res);
     getRenderingPins(res);
   };
@@ -60,12 +60,17 @@
     adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
   };
 
+  const clearPage = function () {
+    adForm.reset();
+  };
+
 
   // Вешаем 2 обработчика событий на главную метку
   mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
   mapPin.addEventListener(`mousedown`, buttonMouseDownHandler);
 
   window.activatePage = activatePage;
+  window.clearPage = clearPage;
   window.buttonMouseDownHandler = buttonMouseDownHandler;
   window.buttonKeyDownHandler = buttonKeyDownHandler;
   window.mapPin = mapPin;
