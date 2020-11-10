@@ -22,7 +22,7 @@
     // console.log(offers); // тут все нужные массивы
     // console.log(amount); // тут уже не больше 5
     for (let i = 0; i < amount.length; i++) {
-      console.log(offers);
+      // console.log(offers);
       fragment.append(getRenderingPins(offers));
     }
     mapPinsElement.append(fragment);
