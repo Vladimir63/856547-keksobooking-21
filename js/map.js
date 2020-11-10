@@ -39,6 +39,8 @@
     window.pin.render(res.slice);
     getCreateCard(res);
     getRenderingPins(res);
+    window.offers = res;
+    // console.log(window.offers);
   };
 
   const onError = function (res) {

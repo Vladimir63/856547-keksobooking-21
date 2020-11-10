@@ -31,6 +31,15 @@
     return arrPins;
   };
 
+  const addHidden = function () {
+    const mapPinsChildren = mapPins.querySelectorAll(`.map__card`);
+    let newArray = Array.from(mapPinsChildren);
+
+    for (let i = 0; i < newArray.length; i++) {
+      newArray[i].classList.add(`hidden`);
+    }
+  };
+
   map.addEventListener(`click`, function (evt) {
 
     let target = evt.target;
@@ -41,14 +50,6 @@
 
     if ((target.classList.contains(`map__pin`)) && (!target.classList.contains(`map__pin--main`))) {
 
-      const addHidden = function () {
-        const mapPinsChildren = mapPins.querySelectorAll(`.map__card`);
-        let newArray = Array.from(mapPinsChildren);
-
-        for (let i = 0; i < newArray.length; i++) {
-          newArray[i].classList.add(`hidden`);
-        }
-      };
       addHidden();
 
       const buttonId = target.getAttribute(`id`);
@@ -59,6 +60,7 @@
 
   window.getRenderingPins = getRenderingPins;
   window.getCreatePins = getCreatePins;
+  window.addHidden = addHidden;
   window.pin = {
     render: getCreatePins
   };
