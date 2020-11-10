@@ -22,9 +22,10 @@
     // console.log(offers); // тут все нужные массивы
     // console.log(amount); // тут уже не больше 5
     for (let i = 0; i < amount.length; i++) {
-      fragment.appendChild(getRenderingPins(offers[i]));
+      console.log(offers);
+      fragment.append(getRenderingPins(offers));
     }
-    mapPinsElement.appendChild(fragment);
+    mapPinsElement.append(fragment);
   };
 
   function updatePins(typeOfHouse) {
