@@ -41,7 +41,6 @@
     getCreateCard(res);
     renderPins(res);
     window.offers = res;
-    // console.log(window.offers);
   };
 
   const onError = function (res) {
@@ -85,4 +84,5 @@
   window.map = map;
   window.onSuccess = onSuccess;
   window.onError = onError;
+  window.mapFilters = mapFilters;
 })();
