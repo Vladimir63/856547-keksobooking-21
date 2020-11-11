@@ -4,6 +4,7 @@
   const map = document.querySelector(`.map`);
   const mapPins = document.querySelector(`.map__pins`);
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+  const MAX_PIN_ON_MAP = 5;
   const getBookingData = window.getBookingData;
 
   const getRenderingPins = function (pinsClone) {
@@ -21,12 +22,10 @@
     mapPins.appendChild(templateElement);
   };
 
-
-  // Функция создания и заполнения массива
-  const getCreatePins = function (arr) {
+  const getCreatePins = function (array) {
     const arrPins = [];
-    for (let i = 0; i < arr.length; i++) {
-      arrPins.push(getBookingData(i)); // Метод push() добавляет один или более элементов в конец массива и возвращает новую длину массива.
+    for (let i = 0; i < array.length; i++) {
+      arrPins.push(getBookingData(i));
     }
     return arrPins;
   };
@@ -40,6 +39,19 @@
     }
   };
 
+  const removePins = function () {
+    const pins = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+
+    for (let i = 0; i < pins.length; i++) {
+      pins[i].remove();
+    }
+  };
+
+  const renderPins = function (offers) {
+    const amount = offers.slice(0, MAX_PIN_ON_MAP);
+    getRenderingPins(amount);
+  };
+
   map.addEventListener(`click`, function (evt) {
 
     let target = evt.target;
@@ -49,9 +61,7 @@
     }
 
     if ((target.classList.contains(`map__pin`)) && (!target.classList.contains(`map__pin--main`))) {
-
       addHidden();
-
       const buttonId = target.getAttribute(`id`);
       const card = document.querySelector(`#card__${buttonId}`);
       card.classList.remove(`hidden`);
@@ -61,8 +71,7 @@
   window.getRenderingPins = getRenderingPins;
   window.getCreatePins = getCreatePins;
   window.addHidden = addHidden;
-  window.pin = {
-    render: getCreatePins
-  };
-
+  window.removePins = removePins;
+  window.renderPins = renderPins;
+  window.getCreatePins = getCreatePins;
 })();

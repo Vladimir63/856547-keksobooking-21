@@ -12,8 +12,9 @@
   const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
   const TOP_MAP_PIN_SUM = mapPin.offsetTop + HEIGHT_MAIN_PIN_AFTER;
   const getCreateCard = window.getCreateCard;
-  const getRenderingPins = window.getRenderingPins;
   const load = window.load;
+  const renderPins = window.renderPins;
+  const getCreatePins = window.getCreatePins;
 
   // Обработчики событий: активируют страницу кексобукинга
   // по нажатию левой кнопки мыши или клавиши Enter(когда метка в фокусе)
@@ -36,9 +37,9 @@
   };
 
   const onSuccess = function (res) {
-    window.pin.render(res.slice);
+    getCreatePins(res.slice);
     getCreateCard(res);
-    getRenderingPins(res);
+    renderPins(res);
     window.offers = res;
     // console.log(window.offers);
   };
