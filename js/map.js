@@ -16,12 +16,9 @@
   const renderPins = window.renderPins;
   const getCreatePins = window.getCreatePins;
 
-  // Обработчики событий: активируют страницу кексобукинга
-  // по нажатию левой кнопки мыши или клавиши Enter(когда метка в фокусе)
   const buttonMouseDownHandler = function (evt) {
     if (evt.button === 0) {
       activatePage();
-      // Удаляем обработчики
       mapPin.removeEventListener(`mousedown`, buttonMouseDownHandler);
       mapPin.removeEventListener(`keydown`, buttonKeyDownHandler);
     }
@@ -30,13 +27,16 @@
   const buttonKeyDownHandler = function (evt) {
     if (evt.key === `Enter`) {
       activatePage();
-      // Удаляем обработчики
       mapPin.removeEventListener(`mousedown`, buttonMouseDownHandler);
       mapPin.removeEventListener(`keydown`, buttonKeyDownHandler);
     }
   };
 
   const onSuccess = function (res) {
+    for (let i = 0; i < res.length; i++) {
+      res[i].id = i;
+    }
+
     getCreatePins(res.slice);
     getCreateCard(res);
     renderPins(res);
@@ -66,8 +66,6 @@
     adForm.reset();
   };
 
-
-  // Вешаем 2 обработчика событий на главную метку
   mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
   mapPin.addEventListener(`mousedown`, buttonMouseDownHandler);
 

@@ -67,7 +67,7 @@
       const popupAvatar = copyCard.querySelector(`.popup__avatar`);
       const popupClose = copyCard.querySelector(`.popup__close`); // popup закрыть
       // каждой карте добавляем атрибут id
-      copyCard.setAttribute(`id`, `card__${i}`);
+      copyCard.setAttribute(`id`, `card__${newCards[i].id}`);
       // функция, которая добавляет класс `hidden` (как будто на каждую карточку нажал на крестик)
       copyCard.classList.add(`hidden`);
 

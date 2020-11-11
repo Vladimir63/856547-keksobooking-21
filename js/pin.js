@@ -10,11 +10,11 @@
   const getRenderingPins = function (pinsClone) {
     const templateElement = document.createDocumentFragment();
 
-    pinsClone.forEach(function (pinNew, i) {
+    pinsClone.forEach(function (pinNew) {
       const clonElement = pinTemplate.cloneNode(true);
       const clonImg = clonElement.querySelector(`img`);
       clonElement.setAttribute(`style`, `left: ${pinNew.location.x}px; top: ${pinNew.location.y}px`);
-      clonElement.setAttribute(`id`, `${i}`);
+      clonElement.setAttribute(`id`, `${pinNew.id}`);
       clonImg.setAttribute(`src`, `${pinNew.author.avatar}`);
       clonImg.setAttribute(`alt`, `${pinNew.offer.title}`);
       templateElement.appendChild(clonElement);
