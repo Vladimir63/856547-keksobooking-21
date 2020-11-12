@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 - Студент: [Vladimir](https://up.htmlacademy.ru/javascript/21/user/856547).
-- Наставник: Вадим Шевяков.
+- Наставник: [Игорь Шевченко](https://htmlacademy.ru/profile/id149304).
 
 ---
 
