@@ -72,10 +72,10 @@
 
   const updateData = function (hotels) {
     const hotelsFilter = hotels.filter(function (hotel) {
-      return checkHousingType(hotel) &
-        checkHousingRooms(hotel) &
-        checkHousingGuests(hotel) &
-        checkHousingPrice(hotel) &
+      return checkHousingType(hotel) &&
+        checkHousingRooms(hotel) &&
+        checkHousingGuests(hotel) &&
+        checkHousingPrice(hotel) &&
         checkHousingFeatures(hotel);
     });
     renderPins(hotelsFilter);

@@ -14,7 +14,6 @@
   const getCreateCard = window.getCreateCard;
   const load = window.load;
   const renderPins = window.renderPins;
-  const getCreatePins = window.getCreatePins;
 
   const buttonMouseDownHandler = function (evt) {
     if (evt.button === 0) {
@@ -37,7 +36,6 @@
       res[i].id = i;
     }
 
-    getCreatePins(res.slice);
     getCreateCard(res);
     renderPins(res);
     window.offers = res;

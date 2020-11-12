@@ -17,7 +17,6 @@
 
     document.addEventListener(`keydown`, onDocumentKeydown);
 
-    // Вешаем обработчик событий на кнопку ошибки
     errorButton.addEventListener(`mousedown`, errorButtonMouseDownHandler);
     errorButton.addEventListener(`keydown`, errorButtonKeyDownHandler);
 
@@ -38,7 +37,6 @@
   const errorButtonMouseDownHandler = function (evt) {
     if (evt.button === 0) {
       activatePage();
-      // Удаляем обработчики
       errorButton.removeEventListener(`mousedown`, errorButtonMouseDownHandler);
       errorButton.removeEventListener(`keydown`, errorButtonKeyDownHandler);
     }
@@ -47,7 +45,6 @@
   const errorButtonKeyDownHandler = function (evt) {
     if (evt.key === `Enter`) {
       activatePage();
-      // Удаляем обработчики
       errorButton.removeEventListener(`mousedown`, errorButtonMouseDownHandler);
       errorButton.removeEventListener(`keydown`, errorButtonKeyDownHandler);
     }

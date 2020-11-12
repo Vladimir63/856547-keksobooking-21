@@ -2,7 +2,6 @@
 
 (() => {
 
-  // Элементы формы DOM
   const titleForm = document.querySelector(`#title`);
   const priceForm = document.querySelector(`#price`);
   const addressForm = document.querySelector(`#address`);
@@ -183,7 +182,7 @@
 
 
   adForm.addEventListener(`submit`, function (evt) {
-    window.upload(new FormData(adForm), function () { // Объект FormData предназначен для кодирования данных, которые необходимо отправить на сервер посредством технологии AJAX (XMLHttpRequest)
+    window.upload(new FormData(adForm), function () {
     });
     evt.preventDefault();
   });

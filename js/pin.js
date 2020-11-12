@@ -5,7 +5,6 @@
   const mapPins = document.querySelector(`.map__pins`);
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
   const MAX_PIN_ON_MAP = 5;
-  const getBookingData = window.getBookingData;
 
   const getRenderingPins = function (pinsClone) {
     const templateElement = document.createDocumentFragment();
@@ -20,14 +19,6 @@
       templateElement.appendChild(clonElement);
     });
     mapPins.appendChild(templateElement);
-  };
-
-  const getCreatePins = function (array) {
-    const arrPins = [];
-    for (let i = 0; i < array.length; i++) {
-      arrPins.push(getBookingData(i));
-    }
-    return arrPins;
   };
 
   const addHidden = function () {
@@ -69,9 +60,7 @@
   });
 
   window.getRenderingPins = getRenderingPins;
-  window.getCreatePins = getCreatePins;
   window.addHidden = addHidden;
   window.removePins = removePins;
   window.renderPins = renderPins;
-  window.getCreatePins = getCreatePins;
 })();
