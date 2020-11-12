@@ -21,6 +21,4 @@ module.exports = {
     iife: true
   },
   devtool: false
-
-
 }
