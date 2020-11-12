@@ -16,7 +16,7 @@ module.exports = {
     "./js/filter.js"
   ],
   output: {
-    filename: "bundler.js",
+    filename: "bundle.js",
     path: path.resolve(__dirname),
     iife: true
   },
