@@ -1,84 +1,82 @@
 
 'use strict';
 
-(() => {
-  const mapPin = document.querySelector(`.map__pin--main`);
-  const adForm = document.querySelector(`.ad-form`);
-  const map = document.querySelector(`.map`);
-  const mapFilters = document.querySelector(`.map__filters`);
-  const WIDTH_MAIN_PIN = 62;
-  const HEIGHT_MAIN_PIN = 62;
-  const HEIGHT_MAIN_PIN_AFTER = 22;
-  const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
-  const TOP_MAP_PIN_SUM = mapPin.offsetTop + HEIGHT_MAIN_PIN_AFTER;
-  const getCreateCard = window.getCreateCard;
-  const load = window.load;
-  const renderPins = window.renderPins;
+const mapPin = document.querySelector(`.map__pin--main`);
+const adForm = document.querySelector(`.ad-form`);
+const map = document.querySelector(`.map`);
+const mapFilters = document.querySelector(`.map__filters`);
+const WIDTH_MAIN_PIN = 62;
+const HEIGHT_MAIN_PIN = 62;
+const HEIGHT_MAIN_PIN_AFTER = 22;
+const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
+const TOP_MAP_PIN_SUM = mapPin.offsetTop + HEIGHT_MAIN_PIN_AFTER;
+const getCreateCard = window.getCreateCard;
+const load = window.load;
+const renderPins = window.renderPins;
 
-  const buttonMouseDownHandler = function (evt) {
-    if (evt.button === 0) {
-      activatePage();
-      mapPin.removeEventListener(`mousedown`, buttonMouseDownHandler);
-      mapPin.removeEventListener(`keydown`, buttonKeyDownHandler);
-    }
-  };
+const buttonMouseDownHandler = function (evt) {
+  if (evt.button === 0) {
+    activatePage();
+    mapPin.removeEventListener(`mousedown`, buttonMouseDownHandler);
+    mapPin.removeEventListener(`keydown`, buttonKeyDownHandler);
+  }
+};
 
-  const buttonKeyDownHandler = function (evt) {
-    if (evt.key === `Enter`) {
-      activatePage();
-      mapPin.removeEventListener(`mousedown`, buttonMouseDownHandler);
-      mapPin.removeEventListener(`keydown`, buttonKeyDownHandler);
-    }
-  };
+const buttonKeyDownHandler = function (evt) {
+  if (evt.key === `Enter`) {
+    activatePage();
+    mapPin.removeEventListener(`mousedown`, buttonMouseDownHandler);
+    mapPin.removeEventListener(`keydown`, buttonKeyDownHandler);
+  }
+};
 
-  const onSuccess = function (res) {
-    for (let i = 0; i < res.length; i++) {
-      res[i].id = i;
-    }
+const onSuccess = function (res) {
+  for (let i = 0; i < res.length; i++) {
+    res[i].id = i;
+  }
 
-    getCreateCard(res);
-    renderPins(res);
-    window.offers = res;
-  };
+  getCreateCard(res);
+  renderPins(res);
+  window.offers = res;
+};
 
-  const onError = function (res) {
-    window.message.showError(res);
-  };
+const onError = function (res) {
+  window.message.showError(res);
+};
 
-  const activatePage = function () {
-    map.classList.remove(`map--faded`);
-    adForm.classList.remove(`ad-form--disabled`);
-    mapFilters.classList.remove(`ad-form--disabled`);
-    for (let i = 0; i < adForm.children.length; i++) {
-      adForm.children[i].removeAttribute(`disabled`);
-    }
-    for (let i = 0; i < mapFilters.children.length; i++) {
-      mapFilters.children[i].removeAttribute(`disabled`);
-    }
+const activatePage = function () {
+  map.classList.remove(`map--faded`);
+  adForm.classList.remove(`ad-form--disabled`);
+  mapFilters.classList.remove(`ad-form--disabled`);
+  for (let i = 0; i < adForm.children.length; i++) {
+    adForm.children[i].removeAttribute(`disabled`);
+  }
+  for (let i = 0; i < mapFilters.children.length; i++) {
+    mapFilters.children[i].removeAttribute(`disabled`);
+  }
 
-    load(onSuccess, onError);
-    adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
-  };
+  load(onSuccess, onError);
+  adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
+};
 
-  const clearPage = function () {
-    adForm.reset();
-  };
+const clearPage = function () {
+  adForm.reset();
+};
 
-  mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
-  mapPin.addEventListener(`mousedown`, buttonMouseDownHandler);
+mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
+mapPin.addEventListener(`mousedown`, buttonMouseDownHandler);
 
-  window.activatePage = activatePage;
-  window.clearPage = clearPage;
-  window.buttonMouseDownHandler = buttonMouseDownHandler;
-  window.buttonKeyDownHandler = buttonKeyDownHandler;
-  window.mapPin = mapPin;
-  window.WIDTH_MAIN_PIN = WIDTH_MAIN_PIN;
-  window.HEIGHT_MAIN_PIN = HEIGHT_MAIN_PIN;
-  window.HEIGHT_MAIN_PIN_AFTER = HEIGHT_MAIN_PIN_AFTER;
-  window.LEFT_MAP_PIN = LEFT_MAP_PIN;
-  window.TOP_MAP_PIN_SUM = TOP_MAP_PIN_SUM;
-  window.map = map;
-  window.onSuccess = onSuccess;
-  window.onError = onError;
-  window.mapFilters = mapFilters;
-})();
+window.activatePage = activatePage;
+window.clearPage = clearPage;
+window.buttonMouseDownHandler = buttonMouseDownHandler;
+window.buttonKeyDownHandler = buttonKeyDownHandler;
+window.mapPin = mapPin;
+window.WIDTH_MAIN_PIN = WIDTH_MAIN_PIN;
+window.HEIGHT_MAIN_PIN = HEIGHT_MAIN_PIN;
+window.HEIGHT_MAIN_PIN_AFTER = HEIGHT_MAIN_PIN_AFTER;
+window.LEFT_MAP_PIN = LEFT_MAP_PIN;
+window.TOP_MAP_PIN_SUM = TOP_MAP_PIN_SUM;
+window.map = map;
+window.onSuccess = onSuccess;
+window.onError = onError;
+window.mapFilters = mapFilters;
