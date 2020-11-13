@@ -31,6 +31,7 @@
     });
 
     document.addEventListener(`keydown`, onDocumentKeydown);
+
     main.appendChild(success);
   };
 
