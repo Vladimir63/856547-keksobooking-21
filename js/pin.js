@@ -4,6 +4,7 @@ const map = document.querySelector(`.map`);
 const mapPins = document.querySelector(`.map__pins`);
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 const MAX_PIN_ON_MAP = 5;
+const mapPin = document.querySelector(`.map__pin--main`);
 
 const getRenderingPins = function (pinsClone) {
   const templateElement = document.createDocumentFragment();
@@ -42,6 +43,14 @@ const renderPins = function (offers) {
   getRenderingPins(amount);
 };
 
+const LEFT_MAP_PIN = window.LEFT_MAP_PIN;
+const TOP_MAP_PIN = window.TOP_MAP_PIN;
+
+const setDefaultCoords = function () {
+  mapPin.style.top = TOP_MAP_PIN + `px`;
+  mapPin.style.left = LEFT_MAP_PIN + `px`;
+};
+
 map.addEventListener(`click`, function (evt) {
 
   let target = evt.target;
@@ -58,7 +67,7 @@ map.addEventListener(`click`, function (evt) {
   }
 });
 
-window.getRenderingPins = getRenderingPins;
 window.addHidden = addHidden;
 window.removePins = removePins;
 window.renderPins = renderPins;
+window.setDefaultCoords = setDefaultCoords;

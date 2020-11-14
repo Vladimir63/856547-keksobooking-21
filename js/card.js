@@ -4,43 +4,6 @@
 
 const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 const mapPins = document.querySelector(`.map__pins`);
-const FEATURES = [
-  `wifi`,
-  `dishwasher`,
-  `parking`,
-  `washer`,
-  `elevator`,
-  `conditioner`
-];
-const PHOTOS = [
-  `http://o0.github.io/assets/images/tokyo/hotel1.jpg`,
-  `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
-  `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
-];
-const getRandomNumbers = window.getRandomNumbers;
-const unique = window.unique;
-
-const createArrFeatures = function () {
-  const arrfeatures = [];
-  const arrFeaturesLength = getRandomNumbers(0, FEATURES.length);
-  for (let i = 0; i < arrFeaturesLength; i++) {
-    const m = Math.floor(Math.random() * FEATURES.length);
-    arrfeatures.push(FEATURES[m]);
-  }
-  const uniqueArrfeatures = unique(arrfeatures);
-  return uniqueArrfeatures;
-};
-
-const createArrPhotos = function () {
-  const arrPhotos = [];
-  const arrPhotosLength = getRandomNumbers(0, PHOTOS.length);
-  for (let i = 0; i < arrPhotosLength; i++) {
-    const m = Math.floor(Math.random() * PHOTOS.length);
-    arrPhotos.push(PHOTOS[m]);
-  }
-  const uniqueArrPhotos = unique(arrPhotos);
-  return uniqueArrPhotos;
-};
 
 const removeBlock = function (div) {
   div.style.display = `none`;
@@ -184,8 +147,15 @@ const getCreateCard = function (newCards) {
   mapPins.insertBefore(templateElementCard, mapFiltersContainer);
 };
 
+const removeCards = function () {
+  const mapPinsChildren = mapPins.querySelectorAll(`.map__card`);
+
+  for (let i = 0; i < mapPinsChildren.length; i++) {
+    mapPinsChildren[i].remove();
+  }
+};
+
 window.getCreateCard = getCreateCard;
 window.removeBlock = removeBlock;
-window.createArrFeatures = createArrFeatures;
-window.createArrPhotos = createArrPhotos;
+window.removeCards = removeCards;
 

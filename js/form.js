@@ -9,14 +9,12 @@ const timeOutForm = document.querySelector(`#timeout`);
 const adForm = document.querySelector(`.ad-form`);
 const adFormRoomNumber = adForm.querySelector(`#room_number`);
 const adFormGuestNumber = adForm.querySelector(`#capacity`);
-const WIDTH_MAIN_PIN = 62;
-const HEIGHT_MAIN_PIN = 62;
 const mapPin = document.querySelector(`.map__pin--main`);
-const LEFT_MAP_PIN = mapPin.offsetLeft + WIDTH_MAIN_PIN / 2;
-const TOP_MAP_PIN = mapPin.offsetTop - HEIGHT_MAIN_PIN / 2;
+const LEFT_MAP_PIN = window.LEFT_MAP_PIN;
+const TOP_MAP_PIN = window.TOP_MAP_PIN;
 const mapFilters = window.mapFilters;
-const onClear = document.querySelector(`.ad-form__reset`);
-const clearPage = window.clearPage;
+const adFormReset = document.querySelector(`.ad-form__reset`);
+const deactivatePage = window.deactivatePage;
 const TYPE_PRICE = {
   'bungalow': 0,
   'flat': 1000,
@@ -178,15 +176,9 @@ const setImgFiles = function () {
 };
 setImgFiles();
 
-
-adForm.addEventListener(`submit`, function (evt) {
-  window.upload(new FormData(adForm), function () {
-  });
-  evt.preventDefault();
-});
-
 adForm.addEventListener(`submit`, function (evt) {
   evt.preventDefault();
+  deactivatePage();
   window.upload(new FormData(adForm), onSuccess, onError);
 });
 
@@ -198,10 +190,24 @@ const onError = function (res) {
   window.message.showError(res);
 };
 
-onClear.addEventListener(`click`, function (evt) {
-  evt.preventDefault();
-  clearPage();
-});
+const buttonKeyDownClear = function (evt) {
+  if (evt.key === `Enter`) {
+    deactivatePage();
+    mapPin.removeEventListener(`mousedown`, buttonMouseDownClear);
+    mapPin.removeEventListener(`keydown`, buttonKeyDownClear);
+  }
+};
+
+const buttonMouseDownClear = function (evt) {
+  if (evt.button === 0) {
+    deactivatePage();
+    mapPin.removeEventListener(`mousedown`, buttonMouseDownClear);
+    mapPin.removeEventListener(`keydown`, buttonKeyDownClear);
+  }
+};
+
+adFormReset.addEventListener(`keydown`, buttonKeyDownClear);
+adFormReset.addEventListener(`mousedown`, buttonMouseDownClear);
 
 window.createAttributesForm = createAttributesForm;
 window.validationTime = validationTime;
@@ -210,3 +216,5 @@ window.checkGuestNumber = checkGuestNumber;
 window.setGuestNumbers = setGuestNumbers;
 window.setImgFiles = setImgFiles;
 window.addressForm = addressForm;
+
+

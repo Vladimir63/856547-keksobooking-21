@@ -9,6 +9,7 @@ const housingGuests = document.querySelector(`#housing-guests`);
 const addHidden = window.addHidden;
 const renderPins = window.renderPins;
 const removePins = window.removePins;
+
 const costRoom = {
   low: {
     min: 0,
@@ -24,10 +25,14 @@ const costRoom = {
   }
 };
 
+const debounce = function () {
+  window.debounce(updateData);
+};
+
 mapFilters.addEventListener(`change`, function () {
   addHidden();
   removePins();
-  window.debounce(updateData(window.offers));
+  debounce(window.offers);
 });
 
 const checkHousingType = function (pin) {

@@ -1,11 +1,12 @@
 'use strict';
 
 const WIDTH_MAIN_PIN = window.WIDTH_MAIN_PIN;
+const HEIGHT_MAIN_PIN = window.HEIGHT_MAIN_PIN;
 const HEIGHT_MAIN_PIN_AFTER = window.HEIGHT_MAIN_PIN_AFTER;
-const MIN_Y = 130 - HEIGHT_MAIN_PIN_AFTER;
-const MAX_Y = 630 - HEIGHT_MAIN_PIN_AFTER;
-const MIN_X = 0 - WIDTH_MAIN_PIN / 2;
-const MAX_X = 1200 - WIDTH_MAIN_PIN / 2;
+const MIN_Y = 130 - HEIGHT_MAIN_PIN_AFTER - HEIGHT_MAIN_PIN;
+const MAX_Y = 630 - HEIGHT_MAIN_PIN_AFTER - HEIGHT_MAIN_PIN;
+const MIN_X = 0 - Math.ceil(WIDTH_MAIN_PIN / 2);
+const MAX_X = 1200 - Math.ceil(WIDTH_MAIN_PIN / 2);
 const mapPin = window.mapPin;
 const addressForm = window.addressForm;
 
@@ -56,14 +57,14 @@ mapPin.addEventListener(`mousedown`, (evt) => {
     if (mapPinPosition.y - HEIGHT_MAIN_PIN_AFTER < MIN_Y) {
       mapPinPosition.y = MIN_Y;
     }
-    if (mapPinPosition.x - WIDTH_MAIN_PIN / 2 < MIN_X) {
+    if (mapPinPosition.x < MIN_X) {
       mapPinPosition.x = MIN_X;
     }
-    if (mapPinPosition.x + WIDTH_MAIN_PIN / 2 > MAX_X) {
+    if (mapPinPosition.x > MAX_X) {
       mapPinPosition.x = MAX_X;
     }
 
-    addressForm.value = `${mapPinPosition.x + WIDTH_MAIN_PIN / 2}, ${mapPinPosition.y + HEIGHT_MAIN_PIN_AFTER}`;
+    addressForm.value = `${mapPinPosition.x + Math.ceil(WIDTH_MAIN_PIN / 2)}, ${mapPinPosition.y + HEIGHT_MAIN_PIN + HEIGHT_MAIN_PIN_AFTER}`;
   };
 
   const onMouseUp = (upEvt) => {
@@ -74,3 +75,12 @@ mapPin.addEventListener(`mousedown`, (evt) => {
   document.addEventListener(`mousemove`, onMouseMove);
   document.addEventListener(`mouseup`, onMouseUp);
 });
+
+/*
+4.3. Формат значения поля адреса: {{x}}, {{y}}, где {{x}} и {{y}} это координаты, на которые метка указывает своим острым концом. Например, если метка .map__pin--main имеет CSS-координаты top: 200px; left: 300px, то в поле адрес должно быть записано значение 300 + расстояние до острого конца по горизонтали, 200 + расстояние до острого конца по вертикали. Координаты не должны быть дробными.
+
+
+style= top: 200px; left: 300px;
+300+65/2
+200+65+22
+*/
