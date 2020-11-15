@@ -2,7 +2,6 @@ const path = require("path");
 
 module.exports = {
   entry: [
-    "./js/util.js",
     "./js/card.js",
     "./js/load.js",
     "./js/upload.js",

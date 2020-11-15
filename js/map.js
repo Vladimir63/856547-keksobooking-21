@@ -78,7 +78,7 @@ const deactivatePage = function () {
     mapFilters.children[i].setAttribute(`disabled`, `disabled`);
   }
   setDefaultCoords();
-  adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
+  adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
 
 };
 
