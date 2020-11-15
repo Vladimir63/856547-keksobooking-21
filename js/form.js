@@ -178,8 +178,8 @@ setImgFiles();
 
 adForm.addEventListener(`submit`, function (evt) {
   evt.preventDefault();
-  deactivatePage();
   window.upload(new FormData(adForm), onSuccess, onError);
+  deactivatePage();
 });
 
 const onSuccess = function (res) {
