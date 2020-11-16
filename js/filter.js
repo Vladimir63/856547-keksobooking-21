@@ -75,10 +75,10 @@ const updateData = function (hotels) {
   renderPins(hotelsFilter);
 };
 
-const deb = window.debounce(updateData);
+const updateWithDebounce = window.debounce(updateData);
 
 mapFilters.addEventListener(`change`, function () {
   addHidden();
   removePins();
-  deb(window.offers);
+  updateWithDebounce(window.offers);
 });
