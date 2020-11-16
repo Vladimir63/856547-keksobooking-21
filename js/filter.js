@@ -25,16 +25,6 @@ const costRoom = {
   }
 };
 
-const debounce = function () {
-  window.debounce(updateData);
-};
-
-mapFilters.addEventListener(`change`, function () {
-  addHidden();
-  removePins();
-  debounce(window.offers);
-});
-
 const checkHousingType = function (pin) {
   if (housingType.value === ANY) {
     return true;
@@ -84,3 +74,11 @@ const updateData = function (hotels) {
   });
   renderPins(hotelsFilter);
 };
+
+const deb = window.debounce(updateData);
+
+mapFilters.addEventListener(`change`, function () {
+  addHidden();
+  removePins();
+  deb(window.offers);
+});

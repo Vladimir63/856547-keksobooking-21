@@ -63,6 +63,12 @@ const activatePage = function () {
   adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN_SUM);
 };
 
+function addListeners() {
+  mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
+  mapPin.addEventListener(`mousedown`, buttonMouseDownHandler);
+}
+addListeners();
+
 const deactivatePage = function () {
   mapFilters.reset();
   adForm.reset();
@@ -80,10 +86,9 @@ const deactivatePage = function () {
   setDefaultCoords();
   adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
 
+  addListeners();
 };
 
-mapPin.addEventListener(`keydown`, buttonKeyDownHandler);
-mapPin.addEventListener(`mousedown`, buttonMouseDownHandler);
 
 window.activatePage = activatePage;
 window.buttonMouseDownHandler = buttonMouseDownHandler;

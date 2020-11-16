@@ -43,12 +43,12 @@ const renderPins = function (offers) {
   getRenderingPins(amount);
 };
 
-const LEFT_MAP_PIN = window.LEFT_MAP_PIN;
-const TOP_MAP_PIN = window.TOP_MAP_PIN;
+const LEFT_MAP_PIN_100 = Math.ceil(mapPin.offsetLeft);
+const TOP_MAP_PIN_100 = Math.ceil(mapPin.offsetTop);
 
 const setDefaultCoords = function () {
-  mapPin.style.top = TOP_MAP_PIN + `px`;
-  mapPin.style.left = LEFT_MAP_PIN + `px`;
+  mapPin.style.top = TOP_MAP_PIN_100 + `px`;
+  mapPin.style.left = LEFT_MAP_PIN_100 + `px`;
 };
 
 map.addEventListener(`click`, function (evt) {
