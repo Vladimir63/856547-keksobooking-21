@@ -1,7 +1,7 @@
 'use strict';
 
-const createXhr = function (onSuccess, onError) {
-  let xhr = new XMLHttpRequest();
+const createRequest = function (onSuccess, onError) {
+  const xhr = new XMLHttpRequest();
   xhr.responseType = `json`;
 
   xhr.addEventListener(`load`, function () {
@@ -47,6 +47,6 @@ const createXhr = function (onSuccess, onError) {
 };
 
 window.xhr = {
-  createXhr
+  createRequest
 };
 

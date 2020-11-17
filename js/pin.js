@@ -1,12 +1,12 @@
 'use strict';
 
-const map = document.querySelector(`.map`);
-const mapPins = document.querySelector(`.map__pins`);
-const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 const MAX_PIN_ON_MAP = 5;
 const mapPin = document.querySelector(`.map__pin--main`);
 const LEFT_MAP_PIN_CENTER = mapPin.offsetLeft;
 const TOP_MAP_PIN_CENTER = mapPin.offsetTop;
+const map = document.querySelector(`.map`);
+const mapPins = document.querySelector(`.map__pins`);
+const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
 const getRenderingPins = function (pinsClone) {
   const templateElement = document.createDocumentFragment();
@@ -25,7 +25,7 @@ const getRenderingPins = function (pinsClone) {
 
 const addHidden = function () {
   const mapPinsChildren = mapPins.querySelectorAll(`.map__card`);
-  let newArray = Array.from(mapPinsChildren);
+  const newArray = Array.from(mapPinsChildren);
 
   for (let i = 0; i < newArray.length; i++) {
     newArray[i].classList.add(`hidden`);
@@ -66,7 +66,12 @@ map.addEventListener(`click`, function (evt) {
   }
 });
 
-window.addHidden = addHidden;
-window.removePins = removePins;
-window.renderPins = renderPins;
-window.setDefaultCoords = setDefaultCoords;
+window.pin = {
+  addHidden,
+  removePins,
+  renderPins,
+  setDefaultCoords,
+  mapPin,
+  map,
+  MAX_PIN_ON_MAP
+};

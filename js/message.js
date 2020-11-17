@@ -1,13 +1,12 @@
 'use strict';
 
-let templateError = document.querySelector(`#error`).content.querySelector(`.error`);
-let templetSuccess = document.querySelector(`#success`).content.querySelector(`.success`);
-let main = document.querySelector(`main`);
+const templateError = document.querySelector(`#error`).content.querySelector(`.error`);
+const templetSuccess = document.querySelector(`#success`).content.querySelector(`.success`);
+const main = document.querySelector(`main`);
 let errorButton;
-const activatePage = window.activatePage;
 
 const showError = function (errorMessage) {
-  let error = templateError.cloneNode(true);
+  const error = templateError.cloneNode(true);
   errorButton = error.querySelector(`.error__button`);
   error.querySelector(`.error__message`).textContent = errorMessage;
   error.addEventListener(`click`, function () {
@@ -23,7 +22,7 @@ const showError = function (errorMessage) {
 };
 
 const showSuccess = function () {
-  let success = templetSuccess.cloneNode(true);
+  const success = templetSuccess.cloneNode(true);
   success.addEventListener(`click`, function () {
     closeSuccess();
   });
@@ -35,7 +34,7 @@ const showSuccess = function () {
 
 const errorButtonMouseDownHandler = function (evt) {
   if (evt.button === 0) {
-    activatePage();
+    window.map.activatePage();
     errorButton.removeEventListener(`mousedown`, errorButtonMouseDownHandler);
     errorButton.removeEventListener(`keydown`, errorButtonKeyDownHandler);
   }
@@ -43,14 +42,14 @@ const errorButtonMouseDownHandler = function (evt) {
 
 const errorButtonKeyDownHandler = function (evt) {
   if (evt.key === `Enter`) {
-    activatePage();
+    window.map.activatePage();
     errorButton.removeEventListener(`mousedown`, errorButtonMouseDownHandler);
     errorButton.removeEventListener(`keydown`, errorButtonKeyDownHandler);
   }
 };
 
 const closeError = function () {
-  let error = main.querySelector(`.error`);
+  const error = main.querySelector(`.error`);
   if (error) {
     error.remove();
     document.removeEventListener(`keydown`, onDocumentKeydown);
@@ -58,7 +57,7 @@ const closeError = function () {
 };
 
 const closeSuccess = function () {
-  let success = main.querySelector(`.success`);
+  const success = main.querySelector(`.success`);
   if (success) {
     success.remove();
     document.removeEventListener(`keydown`, onDocumentKeydown);

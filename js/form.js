@@ -9,12 +9,7 @@ const timeOutForm = document.querySelector(`#timeout`);
 const adForm = document.querySelector(`.ad-form`);
 const adFormRoomNumber = adForm.querySelector(`#room_number`);
 const adFormGuestNumber = adForm.querySelector(`#capacity`);
-const mapPin = document.querySelector(`.map__pin--main`);
-const LEFT_MAP_PIN = window.LEFT_MAP_PIN;
-const TOP_MAP_PIN = window.TOP_MAP_PIN;
-const mapFilters = window.mapFilters;
 const adFormReset = document.querySelector(`.ad-form__reset`);
-const deactivatePage = window.deactivatePage;
 const TYPE_PRICE = {
   'bungalow': 0,
   'flat': 1000,
@@ -28,11 +23,11 @@ for (let i = 0; i < adForm.children.length; i++) {
 }
 
 // Блокируем изменение атрибутов блока фильтров
-for (let i = 0; i < mapFilters.children.length; i++) {
-  mapFilters.children[i].setAttribute(`disabled`, `disabled`);
+for (let i = 0; i < window.map.mapFilters.children.length; i++) {
+  window.map.mapFilters.children[i].setAttribute(`disabled`, `disabled`);
 }
 
-adForm.querySelector(`#address`).setAttribute(`value`, LEFT_MAP_PIN + `, ` + TOP_MAP_PIN);
+adForm.querySelector(`#address`).setAttribute(`value`, window.map.LEFT_MAP_PIN + `, ` + window.map.TOP_MAP_PIN);
 
 
 const createAttributesForm = function () {
@@ -57,15 +52,14 @@ const createAttributesForm = function () {
 createAttributesForm();
 
 // При активации чтоб было верное значение: квартира = 1000
-priceForm.setAttribute(`min`, TYPE_PRICE[typeOfHouseForm.options[typeOfHouseForm.selectedIndex].value]);
-priceForm.setAttribute(`placeholder`, TYPE_PRICE[typeOfHouseForm.options[typeOfHouseForm.selectedIndex].value]);
+priceForm.setAttribute(`min`, TYPE_PRICE[typeOfHouseForm.value]);
+priceForm.setAttribute(`placeholder`, TYPE_PRICE[typeOfHouseForm.value]);
 
 // Вешаем обработчик на изменение типа жилья
-typeOfHouseForm.addEventListener(`change`, function (evt) {
-  priceForm.setAttribute(`min`, TYPE_PRICE[typeOfHouseForm.options[evt.currentTarget.selectedIndex].value]);
-  priceForm.setAttribute(`placeholder`, TYPE_PRICE[typeOfHouseForm.options[evt.currentTarget.selectedIndex].value]);
+typeOfHouseForm.addEventListener(`change`, function () {
+  priceForm.setAttribute(`min`, TYPE_PRICE[typeOfHouseForm.value]);
+  priceForm.setAttribute(`placeholder`, TYPE_PRICE[typeOfHouseForm.value]);
 });
-
 
 // Поля «Время заезда» и «Время выезда» синхронизированы
 const validationTime = function (evt) {
@@ -157,7 +151,7 @@ const setGuestNumbers = () => {
   const guestNumber = checkGuestNumber(adFormGuestNumber.value);
   return setGuestNumber(roomNumber, guestNumber);
 };
-setGuestNumbers();
+
 
 // Проверяем изменение количества комнат
 adFormRoomNumber.addEventListener(`change`, () => {
@@ -178,43 +172,33 @@ setImgFiles();
 
 adForm.addEventListener(`submit`, function (evt) {
   evt.preventDefault();
-  window.upload(new FormData(adForm), onSuccess, onError);
-  deactivatePage();
+  window.upload(new FormData(adForm), window.message.showSuccess, window.message.showError);
+  window.map.deactivatePage();
 });
-
-const onSuccess = function (res) {
-  window.message.showSuccess(res);
-};
-
-const onError = function (res) {
-  window.message.showError(res);
-};
 
 const buttonKeyDownClear = function (evt) {
   if (evt.key === `Enter`) {
-    deactivatePage();
-    mapPin.removeEventListener(`mousedown`, buttonMouseDownClear);
-    mapPin.removeEventListener(`keydown`, buttonKeyDownClear);
+    window.map.deactivatePage();
+    window.pin.mapPin.removeEventListener(`mousedown`, buttonMouseDownClear);
+    window.pin.mapPin.removeEventListener(`keydown`, buttonKeyDownClear);
   }
 };
 
 const buttonMouseDownClear = function (evt) {
   if (evt.button === 0) {
-    deactivatePage();
-    mapPin.removeEventListener(`mousedown`, buttonMouseDownClear);
-    mapPin.removeEventListener(`keydown`, buttonKeyDownClear);
+    window.map.deactivatePage();
+    window.pin.mapPin.removeEventListener(`mousedown`, buttonMouseDownClear);
+    window.pin.mapPin.removeEventListener(`keydown`, buttonKeyDownClear);
   }
 };
 
 adFormReset.addEventListener(`keydown`, buttonKeyDownClear);
 adFormReset.addEventListener(`mousedown`, buttonMouseDownClear);
 
-window.createAttributesForm = createAttributesForm;
-window.validationTime = validationTime;
-window.checkRoomNumber = checkRoomNumber;
-window.checkGuestNumber = checkGuestNumber;
-window.setGuestNumbers = setGuestNumbers;
-window.setImgFiles = setImgFiles;
+window.form = {
+  setGuestNumbers
+};
+
 window.addressForm = addressForm;
 
 

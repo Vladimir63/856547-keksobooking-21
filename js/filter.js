@@ -1,14 +1,10 @@
 'use strict';
 
 const ANY = `any`;
-const mapFilters = window.mapFilters;
 const housingType = document.querySelector(`#housing-type`);
 const housingPrice = document.querySelector(`#housing-price`);
 const housingRooms = document.querySelector(`#housing-rooms`);
 const housingGuests = document.querySelector(`#housing-guests`);
-const addHidden = window.addHidden;
-const renderPins = window.renderPins;
-const removePins = window.removePins;
 
 const costRoom = {
   low: {
@@ -57,7 +53,7 @@ const checkHousingPrice = function (pin) {
 };
 
 const checkHousingFeatures = function (pin) {
-  let filterCheckbox = document.querySelectorAll(`.map__checkbox:checked`);
+  const filterCheckbox = document.querySelectorAll(`.map__checkbox:checked`);
 
   return Array.from(filterCheckbox).every(function (feature) {
     return pin.offer.features.indexOf(feature.value) >= 0;
@@ -65,20 +61,29 @@ const checkHousingFeatures = function (pin) {
 };
 
 const updateData = function (hotels) {
-  const hotelsFilter = hotels.filter(function (hotel) {
-    return checkHousingType(hotel) &&
+  const hotelsFilter = [];
+  for (let i = 0; i < hotels.length; i++) {
+    const hotel = hotels[i];
+    if (
+      checkHousingType(hotel) &&
       checkHousingRooms(hotel) &&
       checkHousingGuests(hotel) &&
       checkHousingPrice(hotel) &&
-      checkHousingFeatures(hotel);
-  });
-  renderPins(hotelsFilter);
+      checkHousingFeatures(hotel)) {
+      hotelsFilter.push(hotel);
+      if (hotels.length === window.pin.MAX_PIN_ON_MAP) {
+        break;
+      }
+    }
+
+  }
+  window.pin.renderPins(hotelsFilter);
 };
 
 const updateWithDebounce = window.debounce(updateData);
 
-mapFilters.addEventListener(`change`, function () {
-  addHidden();
-  removePins();
+window.map.mapFilters.addEventListener(`change`, function () {
+  window.pin.addHidden();
+  window.pin.removePins();
   updateWithDebounce(window.offers);
 });

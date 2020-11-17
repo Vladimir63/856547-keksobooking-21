@@ -155,7 +155,8 @@ const removeCards = function () {
   }
 };
 
-window.getCreateCard = getCreateCard;
-window.removeBlock = removeBlock;
-window.removeCards = removeCards;
+window.card = {
+  getCreateCard,
+  removeCards
+};
 

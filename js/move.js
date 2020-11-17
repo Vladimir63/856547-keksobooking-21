@@ -1,16 +1,17 @@
 'use strict';
 
-const WIDTH_MAIN_PIN = window.WIDTH_MAIN_PIN;
-const HEIGHT_MAIN_PIN = window.HEIGHT_MAIN_PIN;
-const HEIGHT_MAIN_PIN_AFTER = window.HEIGHT_MAIN_PIN_AFTER;
-const MIN_Y = 130 - HEIGHT_MAIN_PIN_AFTER - HEIGHT_MAIN_PIN;
-const MAX_Y = 630 - HEIGHT_MAIN_PIN_AFTER - HEIGHT_MAIN_PIN;
-const MIN_X = 0 - Math.ceil(WIDTH_MAIN_PIN / 2);
-const MAX_X = 1200 - Math.ceil(WIDTH_MAIN_PIN / 2);
-const mapPin = window.mapPin;
+
+const MIN_COORDINATE_Y = 130;
+const MAX_COORDINATE_Y = 630;
+const MIN_COORDINATE_X = 0;
+const MAX_COORDINATE_X = 1200;
+const MIN_Y = MIN_COORDINATE_Y - window.map.HEIGHT_MAIN_PIN_AFTER - window.map.HEIGHT_MAIN_PIN;
+const MAX_Y = MAX_COORDINATE_Y - window.map.HEIGHT_MAIN_PIN_AFTER - window.map.HEIGHT_MAIN_PIN;
+const MIN_X = MIN_COORDINATE_X - Math.ceil(window.map.WIDTH_MAIN_PIN / 2);
+const MAX_X = MAX_COORDINATE_X - Math.ceil(window.map.WIDTH_MAIN_PIN / 2);
 const addressForm = window.addressForm;
 
-mapPin.addEventListener(`mousedown`, (evt) => {
+window.pin.mapPin.addEventListener(`mousedown`, (evt) => {
   evt.preventDefault();
 
   let startCoords = {
@@ -32,8 +33,8 @@ mapPin.addEventListener(`mousedown`, (evt) => {
     };
 
     let mapPinPosition = {
-      x: mapPin.offsetLeft - newCoords.x,
-      y: mapPin.offsetTop - newCoords.y
+      x: window.pin.mapPin.offsetLeft - newCoords.x,
+      y: window.pin.mapPin.offsetTop - newCoords.y
     };
 
     const BORDER = {
@@ -44,17 +45,17 @@ mapPin.addEventListener(`mousedown`, (evt) => {
     };
 
     if (mapPinPosition.x >= BORDER.LEFT && mapPinPosition.x <= BORDER.RIGHT) {
-      mapPin.style.left = `${mapPinPosition.x}px`;
+      window.pin.mapPin.style.left = `${mapPinPosition.x}px`;
     }
 
     if (mapPinPosition.y >= BORDER.TOP && mapPinPosition.y <= BORDER.BOTTOM) {
-      mapPin.style.top = `${mapPinPosition.y}px`;
+      window.pin.mapPin.style.top = `${mapPinPosition.y}px`;
     }
 
-    if (mapPinPosition.y + HEIGHT_MAIN_PIN_AFTER > MAX_Y) {
+    if (mapPinPosition.y + window.map.HEIGHT_MAIN_PIN_AFTER > MAX_Y) {
       mapPinPosition.y = MAX_Y;
     }
-    if (mapPinPosition.y - HEIGHT_MAIN_PIN_AFTER < MIN_Y) {
+    if (mapPinPosition.y - window.map.HEIGHT_MAIN_PIN_AFTER < MIN_Y) {
       mapPinPosition.y = MIN_Y;
     }
     if (mapPinPosition.x < MIN_X) {
@@ -64,7 +65,7 @@ mapPin.addEventListener(`mousedown`, (evt) => {
       mapPinPosition.x = MAX_X;
     }
 
-    addressForm.value = `${mapPinPosition.x + Math.ceil(WIDTH_MAIN_PIN / 2)}, ${mapPinPosition.y + HEIGHT_MAIN_PIN + HEIGHT_MAIN_PIN_AFTER}`;
+    addressForm.value = `${mapPinPosition.x + Math.ceil(window.map.WIDTH_MAIN_PIN / 2)}, ${mapPinPosition.y + window.map.HEIGHT_MAIN_PIN + window.map.HEIGHT_MAIN_PIN_AFTER}`;
   };
 
   const onMouseUp = (upEvt) => {

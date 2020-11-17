@@ -3,10 +3,10 @@ const path = require("path");
 module.exports = {
   entry: [
     "./js/card.js",
+    "./js/xhr.js",
     "./js/load.js",
     "./js/upload.js",
-    "./js/xhr.js",
-    "./js/debouncing.js",
+    "./js/debounce.js",
     "./js/pin.js",
     "./js/map.js",
     "./js/form.js",
